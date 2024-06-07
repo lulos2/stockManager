@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.example.stockmanager.controller.ProductController"
+            prefHeight="400.0" prefWidth="600.0">
+    <VBox>
+        <TextField fx:id="productNameField" promptText="Product Name"/>
+        <TextField fx:id="productQuantityField" promptText="Product Quantity"/>
+        <Button text="Add Product" onAction="#handleAddProduct"/>
+    </VBox>
+</AnchorPane>
