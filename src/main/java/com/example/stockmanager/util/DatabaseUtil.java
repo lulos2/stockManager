@@ -19,13 +19,12 @@ public class DatabaseUtil {
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "type TEXT NOT NULL," +
                     "brand TEXT NOT NULL," +
-                    "code INTEGER NOT NULL," +
+                    "code INTEGER PRIMARY KEY," +
                     "cost REAL NOT NULL," +
                     "price REAL NOT NULL," +
                     "quantity INTEGER NOT NULL," +
-                    "description TEXT NOT NULL" +
+                    "description TEXT" +
                     ");";
-
             stmt.executeUpdate(sql);
 
         } catch (SQLException e) {
