@@ -82,6 +82,7 @@ public class ProductController {
         productService.deleteProduct(product);
         productList.removeProduct(product);
         updateTable();
+        clearFields();
     }
 
     @FXML
@@ -89,6 +90,7 @@ public class ProductController {
         updateProduct();
     }
     public void updateProduct(){
+        if(tblProduct.getSelectionModel().getSelectedItem() == null) return;
         Product product = new Product(
                 txtType.getText(),
                 txtBrand.getText(),
@@ -106,13 +108,15 @@ public class ProductController {
 
     public void updateTable() {
         tblProduct.getItems().clear();
-        tblProduct.getItems().addAll(productList.getProducts());
+        tblProduct.getItems().addAll(productService.getAllProducts());
         tblProduct.refresh();
     }
 
     public void loadProductData() {
-        //tblProduct.setItems(productService.getProducts());
-        //tblProduct.refresh();
+        for (Product product : productService.getAllProducts()) {
+            productList.addProduct(product);
+        }
+        updateTable();
     }
 
     @FXML
@@ -131,10 +135,6 @@ public class ProductController {
         loadProductData();
     }
 
-    public ProductList getProductList() {
-        return productList;
-    }
-
     public void setProductList(ProductList productList) {
         this.productList = productList;
     }
@@ -147,7 +147,7 @@ public class ProductController {
         txtPrice.clear();
         txtQuantity.clear();
         txtDescription.clear();
-        txtCost.setEditable(true);
+        txtCode.setDisable(false);
     }
 
     private void updateFields() {
