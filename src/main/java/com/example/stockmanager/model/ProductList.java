@@ -2,14 +2,17 @@ package com.example.stockmanager.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-public class ProductList {
+public class ProductList extends ArrayList<Product>{
 
     List<Product> products;
 
     public ProductList() {
         this.products = new ArrayList<Product>();
+    }
+
+    public ProductList(List<Product> products) {
+        this.products = products;
     }
 
     public void addProduct(Product product) {
@@ -37,12 +40,14 @@ public class ProductList {
         }
     }
 
-    public boolean existCode(long l) {
-        for (Product p : products) {
+    public boolean existCode(Long l) {
+        for (Product p : this.products) {
             if (p.getCode().equals(l)) {
+                System.out.println("Product with code " + l + " already exists.");
                 return true;
             }
         }
         return false;
     }
+
 }

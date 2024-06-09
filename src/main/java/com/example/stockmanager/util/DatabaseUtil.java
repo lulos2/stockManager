@@ -16,13 +16,13 @@ public class DatabaseUtil {
              Statement stmt = conn.createStatement()) {
 
             String sql = "CREATE TABLE IF NOT EXISTS Product (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "id INTEGER," +
                     "type TEXT NOT NULL," +
                     "brand TEXT NOT NULL," +
-                    "code INTEGER PRIMARY KEY," +
+                    "code INTEGER PRIMARY KEY UNIQUE," +
                     "cost REAL NOT NULL," +
                     "price REAL NOT NULL," +
-                    "quantity INTEGER NOT NULL," +
+                    "quantity INTEGER NOT NULL ," +
                     "description TEXT" +
                     ");";
             stmt.executeUpdate(sql);

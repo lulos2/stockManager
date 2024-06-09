@@ -3,8 +3,6 @@ package com.example.stockmanager.service;
 import com.example.stockmanager.DAO.ProductDAO;
 import com.example.stockmanager.DAO.ProductDAOImpl;
 import com.example.stockmanager.model.Product;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.util.List;
 
