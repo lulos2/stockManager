@@ -24,7 +24,6 @@ public class ProductList {
         return products;
     }
 
-
     public void updateProduct(Product product) {
         for (Product p : products) {
             if (p.getCode().equals(product.getCode())) {
@@ -36,5 +35,14 @@ public class ProductList {
                 p.setQuantity(product.getQuantity());
             }
         }
+    }
+
+    public boolean existCode(long l) {
+        for (Product p : products) {
+            if (p.getCode().equals(l)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
