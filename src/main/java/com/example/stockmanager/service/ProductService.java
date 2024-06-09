@@ -25,4 +25,9 @@ public class ProductService {
     public void deleteProduct(Product product) {
         productDAO.deleteProduct(product);
     }
+
+    public List<Product> searchProduct(String text) {
+        System.out.println("ProductService.searchProduct");
+        return productDAO.searchProduct(text);
+    }
 }

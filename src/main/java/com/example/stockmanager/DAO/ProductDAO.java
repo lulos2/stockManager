@@ -7,4 +7,6 @@ public interface ProductDAO {
     void deleteProduct(Product product);
     Product getProduct(Long code);
     List<Product> getAllProducts();
+
+    List<Product> searchProduct(String text);
 }

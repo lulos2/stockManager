@@ -93,4 +93,29 @@ public class ProductDAOImpl implements ProductDAO {
         return products;
     }
 
+    @Override
+    public List<Product> searchProduct(String text) {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT * FROM product WHERE type LIKE ? OR brand LIKE ? OR code LIKE ? OR cost LIKE ? OR price LIKE ? OR quantity LIKE ? OR description LIKE ?";
+        try (Connection conn = DatabaseUtil.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, "%" + text + "%");
+            pstmt.setString(2, "%" + text + "%");
+            pstmt.setString(3, "%" + text + "%");
+            pstmt.setString(4, "%" + text + "%");
+            pstmt.setString(5, "%" + text + "%");
+            pstmt.setString(6, "%" + text + "%");
+            pstmt.setString(7, "%" + text + "%");
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    Product product = new Product(rs.getString("type"), rs.getString("brand"),
+                            rs.getLong("code"), rs.getDouble("cost"), rs.getDouble("price"), rs.getInt("quantity"), rs.getString("description"));
+                    products.add(product);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return products;
+    }
 }

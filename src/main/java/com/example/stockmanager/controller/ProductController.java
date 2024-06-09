@@ -43,6 +43,8 @@ public class ProductController {
     private TextField txtQuantity;
     @FXML
     private TextField txtDescription;
+    @FXML
+    private TextField txtSearch;
 
     public ProductController() {
         this.productList = new ProductList();
@@ -89,6 +91,7 @@ public class ProductController {
     void updateProduct(ActionEvent event) {
         updateProduct();
     }
+
     public void updateProduct(){
         if(tblProduct.getSelectionModel().getSelectedItem() == null) return;
         Product product = new Product(
@@ -119,22 +122,6 @@ public class ProductController {
         updateTable();
     }
 
-    @FXML
-    void initialize() {
-        colType.setCellValueFactory(new PropertyValueFactory<>("type"));
-        colBrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
-        colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
-        colCost.setCellValueFactory(new PropertyValueFactory<>("cost"));
-        colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
-        colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-
-        tblProduct.setOnMouseClicked(event -> {
-            if(tblProduct.getSelectionModel().getSelectedItem() != null) updateFields();
-        });
-        loadProductData();
-    }
-
     public void setProductList(ProductList productList) {
         this.productList = productList;
     }
@@ -160,5 +147,32 @@ public class ProductController {
         txtQuantity.setText(String.valueOf(product.getQuantity()));
         txtDescription.setText(product.getDescription());
         txtCode.setDisable(true);
+    }
+
+    @FXML
+    void searchProduct(ActionEvent event) {
+        searchProduct();
+    }
+
+    public void searchProduct() {
+        tblProduct.getItems().clear();
+        tblProduct.getItems().addAll(productService.searchProduct(txtSearch.getText()));
+        tblProduct.refresh();
+    }
+
+    @FXML
+    void initialize() {
+        colType.setCellValueFactory(new PropertyValueFactory<>("type"));
+        colBrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
+        colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
+        colCost.setCellValueFactory(new PropertyValueFactory<>("cost"));
+        colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        tblProduct.setOnMouseClicked(event -> {
+            if(tblProduct.getSelectionModel().getSelectedItem() != null) updateFields();
+        });
+        loadProductData();
     }
 }
