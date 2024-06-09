@@ -1,13 +1,7 @@
 package com.example.stockmanager.controller;
-
-import com.example.stockmanager.DAO.ProductDAO;
-import com.example.stockmanager.DAO.ProductDAOImpl;
 import com.example.stockmanager.model.Product;
 import com.example.stockmanager.model.ProductList;
 import com.example.stockmanager.service.ProductService;
-import javafx.beans.InvalidationListener;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
@@ -15,16 +9,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-
 public class ProductController {
 
     private final ProductService productService = new ProductService();
     private ProductList productList;
-
     @FXML
     private TableView <Product> tblProduct;
     @FXML
@@ -41,7 +29,6 @@ public class ProductController {
     private TableColumn <Product, Integer> colQuantity;
     @FXML
     private TableColumn <Product, String> colDescription;
-
     @FXML
     private TextField txtType;
     @FXML
@@ -65,7 +52,10 @@ public class ProductController {
     void addProduct(ActionEvent event) {
         addProduct();
     }
+
     void addProduct() {
+        if(txtType.getText().isEmpty() || txtBrand.getText().isEmpty() || txtCode.getText().isEmpty() || txtCost.getText().isEmpty() || txtPrice.getText().isEmpty() || txtQuantity.getText().isEmpty()) return;
+        if(productList.existCode(Long.parseLong(txtCode.getText()))) return;
         Product product = new Product(
                 txtType.getText(),
                 txtBrand.getText(),
@@ -85,7 +75,9 @@ public class ProductController {
     void deleteProduct(ActionEvent event) {
         deleteProduct();
     }
+
     void deleteProduct(){
+        if(tblProduct.getSelectionModel().getSelectedItem() == null) return;
         Product product = tblProduct.getSelectionModel().getSelectedItem();
         productService.deleteProduct(product);
         productList.removeProduct(product);
@@ -94,6 +86,9 @@ public class ProductController {
 
     @FXML
     void updateProduct(ActionEvent event) {
+        updateProduct();
+    }
+    public void updateProduct(){
         Product product = new Product(
                 txtType.getText(),
                 txtBrand.getText(),
