@@ -13,20 +13,18 @@ public class ProductService {
     ProductDAO productDAO = new ProductDAOImpl();
 
     public void addProduct(Product product) {
+        productDAO.addProduct(product);
     }
 
     public List<Product> getAllProducts() {
-        return null;
+        return productDAO.getAllProducts();
     }
 
     public void updateProduct(Product product) {
-    }
-
-    public ObservableList<Product> getProducts() {
-        List<Product> allProducts = productDAO.getAllProducts();
-        return FXCollections.observableArrayList(allProducts);
+        productDAO.updateProduct(product);
     }
 
     public void deleteProduct(Product product) {
+        productDAO.deleteProduct(product);
     }
 }
