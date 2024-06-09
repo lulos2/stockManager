@@ -11,10 +11,10 @@ public class ProductDAOImpl implements ProductDAO {
 
     @Override
     public void addProduct(Product product) {
-        String sql = "INSERT INTO product (name, type, brand, code, cost, price, quantity) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO product (description, type, brand, code, cost, price, quantity) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DatabaseUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, product.getName());
+            pstmt.setString(1, product.getDescription());
             pstmt.setString(2, product.getType());
             pstmt.setString(3, product.getBrand());
             pstmt.setLong(4, product.getCode());
@@ -50,8 +50,8 @@ public class ProductDAOImpl implements ProductDAO {
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
-                Product product = new Product(rs.getString("name"), rs.getString("type"), rs.getString("brand"),
-                        rs.getLong("code"), rs.getDouble("cost"), rs.getDouble("price"), rs.getInt("quantity"));
+                Product product = new Product(rs.getString("type"), rs.getString("brand"),
+                        rs.getLong("code"), rs.getDouble("cost"), rs.getDouble("price"), rs.getInt("quantity"),rs.getString("name"));
                 products.add(product);
             }
         } catch (SQLException e) {

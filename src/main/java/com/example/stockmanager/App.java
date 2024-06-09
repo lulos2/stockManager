@@ -2,40 +2,46 @@ package com.example.stockmanager;
 
 import com.example.stockmanager.DAO.ProductDAO;
 import com.example.stockmanager.DAO.ProductDAOImpl;
+import com.example.stockmanager.controller.ProductController;
 import com.example.stockmanager.model.Product;
+import com.example.stockmanager.model.ProductList;
 import com.example.stockmanager.util.DatabaseUtil;
+import com.example.stockmanager.util.Paths;
 import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.util.List;
 
 import static javafx.geometry.Pos.CENTER;
 
-public class StartAplication extends Application {
+public class App extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage stage) throws Exception {
         DatabaseUtil.createTablesIfNotExist();
-        primaryStage.setTitle("Stock Manager");
-        primaryStage.setScene(new Scene(createAddProductPane(), 400, 400));
-        primaryStage.show();
-        Button showTableButton = new Button("Show Product Table");
-        showTableButton.setOnAction(event -> {
-            primaryStage.setScene(new Scene(createProductTablePane(), 400, 400));
-        });
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Paths.PRODUCT_FXML));
+        AnchorPane pane = loader.load();
+
+        ProductController controller = loader.getController();
+        controller.setProductList(new ProductList());
+
+        Scene scene = new Scene(pane);
+        stage.setScene(scene);
+        stage.show();
     }
 
 
-
+/*
     private Parent createAddProductPane() {
         GridPane grid = new GridPane();
         grid.setAlignment(CENTER);
@@ -153,5 +159,5 @@ public class StartAplication extends Application {
         vbox.getChildren().addAll(table);
 
         return vbox;
-    }
+    }*/
 }

@@ -2,7 +2,7 @@ package com.example.stockmanager.model;
 
 public class Product {
     private int id;
-    private String name;
+    private String description;
     private String type;
     private String brand;
     private Long code;
@@ -13,8 +13,8 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, String type, String brand, Long code, double cost, double price, int quantity) {
-        this.name = name;
+    public Product(String type, String brand, Long code, double cost, double price, int quantity, String description) {
+        this.description = description;
         this.type = type;
         this.brand = brand;
         this.code = code;
@@ -27,12 +27,12 @@ public class Product {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getType() {

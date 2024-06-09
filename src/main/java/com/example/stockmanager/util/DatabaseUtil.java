@@ -17,13 +17,13 @@ public class DatabaseUtil {
 
             String sql = "CREATE TABLE IF NOT EXISTS Product (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "name TEXT NOT NULL," +
                     "type TEXT NOT NULL," +
                     "brand TEXT NOT NULL," +
                     "code INTEGER NOT NULL," +
                     "cost REAL NOT NULL," +
                     "price REAL NOT NULL," +
-                    "quantity INTEGER NOT NULL" +
+                    "quantity INTEGER NOT NULL," +
+                    "description TEXT NOT NULL" +
                     ");";
 
             stmt.executeUpdate(sql);

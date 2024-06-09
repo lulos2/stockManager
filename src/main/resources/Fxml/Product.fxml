@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.stockmanager.controller.ProductController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="363.0" layoutY="-5.0" stroke="BLACK" strokeType="INSIDE" width="303.0" />
+      <Label layoutX="96.0" layoutY="15.0" text="Gestionar Productos" />
+      <Label layoutX="29.0" layoutY="77.0" text="marca" />
+      <Label layoutX="35.0" layoutY="44.0" text="tipo" />
+      <Label layoutX="27.0" layoutY="115.0" text="codigo" />
+      <Label layoutX="30.0" layoutY="159.0" text="costo" />
+      <Label layoutX="29.0" layoutY="200.0" text="precio" />
+      <Label layoutX="21.0" layoutY="243.0" text="cantidad" />
+      <Label layoutX="14.0" layoutY="281.0" text="descripcion" />
+      <TextField fx:id="txtType" layoutX="75.0" layoutY="40.0" />
+      <TextField fx:id="txtBrand" layoutX="76.0" layoutY="73.0" />
+      <TextField fx:id="txtCode" layoutX="77.0" layoutY="112.0" />
+      <TextField fx:id="txtCost" layoutX="78.0" layoutY="155.0" />
+      <TextField fx:id="txtPrice" layoutX="78.0" layoutY="196.0" />
+      <TextField fx:id="txtQuantity" layoutX="79.0" layoutY="239.0" />
+      <TextField fx:id="txtDescription" layoutX="80.0" layoutY="277.0" />
+      <Label layoutX="538.0" layoutY="15.0" text="Lista de Productos" />
+      <Button layoutX="80.0" layoutY="316.0" mnemonicParsing="false" onAction="#addProduct" text="Guardar" />
+      <Button layoutX="162.0" layoutY="316.0" mnemonicParsing="false" onAction="#updateProduct" text="Actualizar" />
+      <TableView fx:id="tblProduct" layoutX="332.0" layoutY="36.0" prefHeight="414.0" prefWidth="530.0">
+        <columns>
+          <TableColumn fx:id="colType" prefWidth="75.0" text="tipo" />
+          <TableColumn fx:id="colBrand" prefWidth="75.0" text="marca" />
+            <TableColumn fx:id="colCode" prefWidth="75.0" text="codigo" />
+            <TableColumn fx:id="colPrice" prefWidth="75.0" text="precio" />
+            <TableColumn fx:id="colCost" prefWidth="75.0" text="costo" />
+            <TableColumn fx:id="colQuantity" prefWidth="75.0" text="cantidad" />
+            <TableColumn fx:id="colDescription" prefWidth="75.0" text="descripcion" />
+        </columns>
+      </TableView>
+      <Button layoutX="557.0" layoutY="473.0" mnemonicParsing="false" onAction="#deleteProduct" text="Eliminar" />
+   </children>
+</AnchorPane>
