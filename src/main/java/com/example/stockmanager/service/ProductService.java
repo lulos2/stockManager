@@ -27,7 +27,6 @@ public class ProductService {
     }
 
     public List<Product> searchProduct(String text) {
-        System.out.println("ProductService.searchProduct");
         return productDAO.searchProduct(text);
     }
 }

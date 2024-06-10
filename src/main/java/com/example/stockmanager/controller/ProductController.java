@@ -92,7 +92,7 @@ public class ProductController {
         updateProduct();
     }
 
-    public void updateProduct(){
+    void updateProduct(){
         if(tblProduct.getSelectionModel().getSelectedItem() == null) return;
         Product product = new Product(
                 txtType.getText(),
