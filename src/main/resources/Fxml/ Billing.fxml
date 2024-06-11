@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="957.0" prefWidth="976.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.stockmanager.controller.BillingController">
+    <VBox layoutX="23.0" layoutY="28.0" prefHeight="680.0" prefWidth="906.0" spacing="10">
+      <HBox spacing="10">
+         <children>
+            <Label text="factura a :" />
+            <TextField fx:id="txtBillName" promptText="Nombre" />
+         </children>
+      </HBox>
+        <HBox spacing="10">
+            <Label text="Código del producto:" />
+            <TextField fx:id="txtProductCode" prefHeight="26.0" prefWidth="98.0" />
+            <Label text="Cantidad:" />
+            <Button minWidth="32.0" onAction="#increaseQuantity" prefHeight="30.0" prefWidth="32.0" text="-" />
+            <TextField fx:id="txtQuantity" prefHeight="26.0" prefWidth="48.0" />
+            <Button minWidth="36.0" onAction="#decreaseQuantity" prefHeight="30.0" prefWidth="36.0" text="+" />
+            <Button onAction="#addProductToBillList" prefHeight="29.0" prefWidth="186.0" text="Agregar Producto" />
+        </HBox>
+        <HBox prefHeight="30.0" prefWidth="760.0" spacing="10">
+         <children>
+            <Label text="servicio: " />
+            <TextField fx:id="txtServiceName" prefHeight="26.0" prefWidth="98.0" />
+            <Label text="Descripcion:" />
+            <TextField fx:id="txtServiceDesc" prefHeight="26.0" prefWidth="98.0" />
+            <Label prefHeight="18.0" prefWidth="54.0" text="Importe:" />
+            <TextField fx:id="txtServicePrice" prefHeight="26.0" prefWidth="98.0" />
+            <Button onAction="#addServiceToBillList" prefHeight="29.0" prefWidth="186.0" text="Agregar Servicio" />
+         </children>
+        </HBox>
+      <Label text="Descripcion" />
+      <TextField fx:id="txtProductCode111" prefHeight="26.0" prefWidth="98.0" />
+      <TableView fx:id="tblProductsBill" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn prefWidth="149.60000038146973" text="Productos" />
+          <TableColumn prefWidth="224.79998779296875" text="Tipo y Marca" />
+            <TableColumn prefWidth="140.80001831054688" text="Cantidad" />
+            <TableColumn prefWidth="115.99993896484375" text="Unidad" />
+            <TableColumn prefWidth="120.79998779296875" text="Precio x Unidad" />
+            <TableColumn prefWidth="130.4000244140625" text="Importe" />
+        </columns>
+      </TableView>
+      <TableView fx:id="tblServiceList" prefHeight="200.0" prefWidth="200.0">
+         <columns>
+            <TableColumn prefWidth="149.60000038146973" text="servicio" />
+            <TableColumn prefWidth="224.79998779296875" text="Descripcion" />
+            <TableColumn prefWidth="130.4000244140625" text="Importe" />
+         </columns>
+      </TableView>
+    </VBox>
+   <Button layoutX="670.0" layoutY="886.0" mnemonicParsing="false" onAction="#saveBill" text="Confirmar Factura" />
+   <Label layoutX="499.0" layoutY="727.0" text="Productos:">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label layoutX="498.0" layoutY="752.0" text="servicios:">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label layoutX="498.0" layoutY="779.0" text="subTotal:">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label layoutX="510.0" layoutY="837.0" text="Total:">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </Label>
+   <Label layoutX="498.0" layoutY="808.0" text="Descuento:">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label fx:id="productsPriceCount" layoutX="768.0" layoutY="730.0" prefHeight="18.0" prefWidth="60.0" text="20">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label fx:id="servicePriceCount" layoutX="768.0" layoutY="755.0" prefHeight="18.0" prefWidth="60.0" text="40">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label fx:id="subTotalCount" layoutX="768.0" layoutY="782.0" prefHeight="18.0" prefWidth="60.0" text="60">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label fx:id="desc" layoutX="768.0" layoutY="811.0" prefHeight="18.0" prefWidth="60.0" text="0">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label fx:id="totalcount" layoutX="768.0" layoutY="840.0" prefHeight="18.0" prefWidth="60.0" text="60">
+      <font>
+         <Font name="System Bold" size="14.0" />
+      </font>
+   </Label>
+   <Line endX="118.00006103515625" layoutX="710.0" layoutY="800.0" opacity="0.19" startX="-212.39996337890625" />
+   <Line endX="128.50006103515625" layoutX="699.0" layoutY="748.0" opacity="0.19" startX="-200.5999755859375" />
+   <Line endX="128.50006103515625" layoutX="699.0" layoutY="773.0" opacity="0.19" startX="-203.0" />
+   <Line endX="96.50006103515625" layoutX="731.0" layoutY="829.0" startX="-236.5999755859375" />
+   <Line endX="-100.0" endY="-148.60003662109375" layoutX="849.0" layoutY="865.0" opacity="0.1" startX="-100.0" />
+   <Button layoutX="70.0" layoutY="739.0" mnemonicParsing="false" onAction="#deleteItem" text="Eliminar Seleccionado" />
+</AnchorPane>
