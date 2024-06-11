@@ -20,22 +20,19 @@ public class BillingController {
     private Label subTotalCount;
 
     @FXML
+    private Label totalcount;
+
+    @FXML
     private TableView<?> tblProductsBill;
 
     @FXML
     private TableView<?> tblServiceList;
 
     @FXML
-    private Label totalcount;
-
-    @FXML
     private TextField txtBillName;
 
     @FXML
     private TextField txtProductCode;
-
-    @FXML
-    private TextField txtProductCode111;
 
     @FXML
     private TextField txtQuantity;

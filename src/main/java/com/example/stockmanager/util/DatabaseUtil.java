@@ -46,6 +46,7 @@ public class DatabaseUtil {
 
             String sql = "CREATE TABLE IF NOT EXISTS Bill (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "client TEXT NOT NULL," +
                     "date TEXT NOT NULL," +
                     "total REAL NOT NULL" +
                     ");";
