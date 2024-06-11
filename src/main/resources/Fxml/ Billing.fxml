@@ -39,8 +39,6 @@
             <Button onAction="#addServiceToBillList" prefHeight="29.0" prefWidth="186.0" text="Agregar Servicio" />
          </children>
         </HBox>
-      <Label text="Descripcion" />
-      <TextField fx:id="txtProductCode111" prefHeight="26.0" prefWidth="98.0" />
       <TableView fx:id="tblProductsBill" prefHeight="200.0" prefWidth="200.0">
         <columns>
           <TableColumn prefWidth="149.60000038146973" text="Productos" />

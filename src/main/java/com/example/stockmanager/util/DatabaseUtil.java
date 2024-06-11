@@ -31,6 +31,7 @@ public class DatabaseUtil {
                     "cost REAL NOT NULL," +
                     "price REAL NOT NULL," +
                     "quantity INTEGER NOT NULL ," +
+                    "unitType TEXT NOT NULL," +
                     "description TEXT" +
                     ");";
             stmt.executeUpdate(sql);

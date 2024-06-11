@@ -9,11 +9,13 @@ public class Product {
     private double cost;
     private double price;
     private int quantity;
+    private String unitType;
+
 
     public Product() {
     }
 
-    public Product(String type, String brand, Long code, double cost, double price, int quantity, String description) {
+    public Product(String type, String brand, Long code, double cost, double price, int quantity, String description, String unitType) {
         this.description = description;
         this.type = type;
         this.brand = brand;
@@ -21,6 +23,7 @@ public class Product {
         this.cost = cost;
         this.price = price;
         this.quantity = quantity;
+        this.unitType = unitType;
     }
 
     public int getId() {
@@ -81,5 +84,14 @@ public class Product {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+
+    public String getUnitType() {
+        return unitType;
+    }
+
+    public void setUnitType(String unitType) {
+        this.unitType = unitType;
     }
 }

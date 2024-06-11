@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -10,8 +11,8 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.stockmanager.controller.ProductController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="777.0" layoutX="435.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="816.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="463.0" layoutX="14.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="303.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="777.0" layoutX="346.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="905.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="545.0" layoutX="4.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="313.0" />
       <Label layoutX="112.0" layoutY="27.0" text="Gestionar Productos" />
       <Label layoutX="45.0" layoutY="117.0" text="marca" />
       <Label layoutX="51.0" layoutY="84.0" text="tipo" />
@@ -25,13 +26,13 @@
       <TextField fx:id="txtCode" layoutX="93.0" layoutY="152.0" />
       <TextField fx:id="txtCost" layoutX="94.0" layoutY="195.0" />
       <TextField fx:id="txtPrice" layoutX="94.0" layoutY="236.0" />
-      <TextField fx:id="txtQuantity" layoutX="95.0" layoutY="279.0" />
+      <TextField fx:id="txtQuantity" layoutX="95.0" layoutY="279.0" prefHeight="26.0" prefWidth="74.0" />
       <TextField fx:id="txtDescription" layoutX="96.0" layoutY="317.0" />
-      <Button layoutX="96.0" layoutY="356.0" mnemonicParsing="false" onAction="#addProduct" text="Guardar" />
-      <Button layoutX="178.0" layoutY="356.0" mnemonicParsing="false" onAction="#updateProduct" text="Actualizar" />
-      <Button layoutX="138.0" layoutY="405.0" mnemonicParsing="false" onAction="#deleteProduct" text="Eliminar" />
+      <Button layoutX="95.0" layoutY="429.0" mnemonicParsing="false" onAction="#addProduct" text="Guardar" />
+      <Button layoutX="177.0" layoutY="429.0" mnemonicParsing="false" onAction="#updateProduct" text="Actualizar" />
+      <Button layoutX="137.0" layoutY="478.0" mnemonicParsing="false" onAction="#deleteProduct" text="Eliminar" />
       <Label layoutX="771.0" layoutY="26.0" prefHeight="18.0" prefWidth="108.0" text="Lista de Productos" />
-      <TableView fx:id="tblProduct" layoutX="449.0" layoutY="57.0" prefHeight="717.0" prefWidth="784.0">
+      <TableView fx:id="tblProduct" layoutX="361.0" layoutY="57.0" prefHeight="718.0" prefWidth="872.0">
         <columns>
           <TableColumn fx:id="colType" prefWidth="84.0" text="tipo" />
           <TableColumn fx:id="colBrand" prefWidth="111.20001220703125" text="marca" />
@@ -39,9 +40,13 @@
             <TableColumn fx:id="colCost" prefWidth="88.800048828125" text="costo" />
             <TableColumn fx:id="colPrice" minWidth="9.60003662109375" prefWidth="115.199951171875" text="precio" />
             <TableColumn fx:id="colQuantity" prefWidth="88.0" text="cantidad" />
-            <TableColumn fx:id="colDescription" prefWidth="139.199951171875" text="descripcion" />
+            <TableColumn fx:id="colUnidad" prefWidth="68.0" text="Unidad" />
+            <TableColumn fx:id="colDescription" prefWidth="157.5999755859375" text="descripcion" />
         </columns>
       </TableView>
       <TextField fx:id="txtSearch" layoutX="1005.0" layoutY="23.0" onAction="#searchProduct" onInputMethodTextChanged="#searchProduct" prefHeight="26.0" prefWidth="228.0" promptText="Buscar" />
+      <CheckBox fx:id="chkLts" layoutX="227.0" layoutY="283.0" mnemonicParsing="false" onMouseClicked="#onlyOneSelected" text="Lts" />
+      <CheckBox fx:id="chkUnity" layoutX="188.0" layoutY="283.0" mnemonicParsing="false" onMouseClicked="#onlyOneSelected" text="U" />
+      <Label layoutX="174.0" layoutY="283.0" text="x" />
    </children>
 </AnchorPane>

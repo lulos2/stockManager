@@ -2,12 +2,15 @@ package com.example.stockmanager.controller;
 import com.example.stockmanager.model.Product;
 import com.example.stockmanager.model.ProductList;
 import com.example.stockmanager.service.ProductService;
+import com.example.stockmanager.util.Enums;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 
 public class ProductController {
 
@@ -28,6 +31,8 @@ public class ProductController {
     @FXML
     private TableColumn <Product, Integer> colQuantity;
     @FXML
+    private TableColumn<Product, String> colUnidad;
+    @FXML
     private TableColumn <Product, String> colDescription;
     @FXML
     private TextField txtType;
@@ -45,6 +50,11 @@ public class ProductController {
     private TextField txtDescription;
     @FXML
     private TextField txtSearch;
+    @FXML
+    private CheckBox chkLts;
+
+    @FXML
+    private CheckBox chkUnity;
 
     public ProductController() {
         this.productList = new ProductList();
@@ -65,7 +75,8 @@ public class ProductController {
                 Double.parseDouble(txtCost.getText()),
                 Double.parseDouble(txtPrice.getText()),
                 Integer.parseInt(txtQuantity.getText()),
-                txtDescription.getText()
+                txtDescription.getText(),
+                unitType()
         );
         productService.addProduct(product);
         productList.addProduct(product);
@@ -73,6 +84,12 @@ public class ProductController {
         clearFields();
     }
 
+    private String unitType() {
+        System.out.println(chkLts.isSelected());
+        if(chkLts.isSelected()) return Enums.LTS;
+        chkUnity.isSelected();
+        return Enums.UNITS;
+    }
     @FXML
     void deleteProduct(ActionEvent event) {
         deleteProduct();
@@ -101,7 +118,8 @@ public class ProductController {
                 Double.parseDouble(txtCost.getText()),
                 Double.parseDouble(txtPrice.getText()),
                 Integer.parseInt(txtQuantity.getText()),
-                txtDescription.getText()
+                txtDescription.getText(),
+                unitType()
         );
         productList.updateProduct(product);
         productService.updateProduct(product);
@@ -135,6 +153,8 @@ public class ProductController {
         txtQuantity.clear();
         txtDescription.clear();
         txtCode.setDisable(false);
+        chkLts.setSelected(false);
+        chkUnity.setSelected(false);
     }
 
     private void updateFields() {
@@ -146,6 +166,10 @@ public class ProductController {
         txtPrice.setText(String.valueOf(product.getPrice()));
         txtQuantity.setText(String.valueOf(product.getQuantity()));
         txtDescription.setText(product.getDescription());
+
+        if(product.getUnitType().equals(Enums.LTS)) chkLts.setSelected(true);
+        else chkUnity.setSelected(true);
+
         txtCode.setDisable(true);
     }
 
@@ -161,6 +185,24 @@ public class ProductController {
     }
 
     @FXML
+    void onlyOneSelected(MouseEvent event) {
+        onlyOneSelected();
+    }
+
+    void onlyOneSelected() {
+        chkLts.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                chkUnity.setSelected(false);
+            }
+        });
+        chkUnity.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue) {
+                chkLts.setSelected(false);
+            }
+        });
+    }
+
+    @FXML
     void initialize() {
         colType.setCellValueFactory(new PropertyValueFactory<>("type"));
         colBrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
@@ -169,6 +211,7 @@ public class ProductController {
         colPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         colQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colUnidad.setCellValueFactory(new PropertyValueFactory<>("unitType"));
 
         tblProduct.setOnMouseClicked(event -> {
             if(tblProduct.getSelectionModel().getSelectedItem() != null) updateFields();

@@ -11,7 +11,7 @@ public class ProductDAOImpl implements ProductDAO {
 
     @Override
     public void addProduct(Product product) {
-        String sql = "INSERT INTO product (description, type, brand, code, cost, price, quantity) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO product (description, type, brand, code, cost, price, quantity, unitType) VALUES (?, ?, ?, ?, ?, ?, ?,?)";
         try (Connection conn = DatabaseUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, product.getDescription());
@@ -21,6 +21,7 @@ public class ProductDAOImpl implements ProductDAO {
             pstmt.setDouble(5, product.getCost());
             pstmt.setDouble(6, product.getPrice());
             pstmt.setInt(7, product.getQuantity());
+            pstmt.setString(8, product.getUnitType());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -29,7 +30,7 @@ public class ProductDAOImpl implements ProductDAO {
 
     @Override
     public void updateProduct(Product product) {
-        String sql = "UPDATE product SET description = ?, type = ?, brand = ?, cost = ?, price = ?, quantity = ? WHERE code = ?";
+        String sql = "UPDATE product SET description = ?, type = ?, brand = ?, cost = ?, price = ?, quantity = ?, unitType = ? WHERE code = ?";
         try (Connection conn = DatabaseUtil.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, product.getDescription());
@@ -38,7 +39,8 @@ public class ProductDAOImpl implements ProductDAO {
             pstmt.setDouble(4, product.getCost());
             pstmt.setDouble(5, product.getPrice());
             pstmt.setInt(6, product.getQuantity());
-            pstmt.setLong(7, product.getCode());
+            pstmt.setString(7, product.getUnitType());
+            pstmt.setLong(8, product.getCode());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,7 +68,7 @@ public class ProductDAOImpl implements ProductDAO {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return new Product(rs.getString("type"), rs.getString("brand"),
-                            rs.getLong("code"), rs.getDouble("cost"), rs.getDouble("price"), rs.getInt("quantity"),rs.getString("name"));
+                            rs.getLong("code"), rs.getDouble("cost"), rs.getDouble("price"), rs.getInt("quantity"),rs.getString("name"), rs.getString("unitType"));
                 }
             }
         } catch (SQLException e) {
@@ -84,7 +86,7 @@ public class ProductDAOImpl implements ProductDAO {
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 Product product = new Product(rs.getString("type"), rs.getString("brand"),
-                        rs.getLong("code"), rs.getDouble("cost"), rs.getDouble("price"), rs.getInt("quantity"),rs.getString("description"));
+                        rs.getLong("code"), rs.getDouble("cost"), rs.getDouble("price"), rs.getInt("quantity"),rs.getString("description"), rs.getString("unitType"));
                 products.add(product);
             }
         } catch (SQLException e) {
@@ -109,7 +111,7 @@ public class ProductDAOImpl implements ProductDAO {
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     Product product = new Product(rs.getString("type"), rs.getString("brand"),
-                            rs.getLong("code"), rs.getDouble("cost"), rs.getDouble("price"), rs.getInt("quantity"), rs.getString("description"));
+                            rs.getLong("code"), rs.getDouble("cost"), rs.getDouble("price"), rs.getInt("quantity"), rs.getString("description"), rs.getString("unitType"));
                     products.add(product);
                 }
             }
