@@ -4,6 +4,7 @@ import com.example.stockmanager.controller.ProductController;
 import com.example.stockmanager.model.ProductList;
 import com.example.stockmanager.util.DatabaseUtil;
 import com.example.stockmanager.util.Paths;
+import com.example.stockmanager.util.StageManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,6 +21,7 @@ public class App extends Application {
         DatabaseUtil.createTablesIfNotExist();
         stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource(Paths.ICONAPP)).toExternalForm()));
 
+        StageManager.setPrimaryStage(stage);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Paths.PRODUCT_FXML));
         AnchorPane pane = loader.load();
@@ -28,7 +30,7 @@ public class App extends Application {
         controller.setProductList(new ProductList());
 
         Scene scene = new Scene(pane);
-        stage.setScene(scene);
+        StageManager.getPrimaryStage().setScene(scene);
         stage.show();
     }
 }

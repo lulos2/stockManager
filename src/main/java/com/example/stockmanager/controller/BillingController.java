@@ -1,4 +1,6 @@
 package com.example.stockmanager.controller;
+import com.example.stockmanager.util.Paths;
+import com.example.stockmanager.util.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -74,6 +76,11 @@ public class BillingController {
     @FXML
     void saveBill(ActionEvent event) {
 
+    }
+
+    @FXML
+    void goToProduct(ActionEvent event) {
+        StageManager.changeScene(Paths.PRODUCT_FXML);
     }
 
 }

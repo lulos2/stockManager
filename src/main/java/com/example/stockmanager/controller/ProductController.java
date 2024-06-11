@@ -3,14 +3,20 @@ import com.example.stockmanager.model.Product;
 import com.example.stockmanager.model.ProductList;
 import com.example.stockmanager.service.ProductService;
 import com.example.stockmanager.util.Enums;
+import com.example.stockmanager.util.Paths;
+import com.example.stockmanager.util.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+
+import java.io.IOException;
 
 public class ProductController {
 
@@ -200,6 +206,11 @@ public class ProductController {
                 chkLts.setSelected(false);
             }
         });
+    }
+
+    @FXML
+    void goToBilling(ActionEvent event) {
+        StageManager.changeScene(Paths.BILLING_FXML);
     }
 
     @FXML
