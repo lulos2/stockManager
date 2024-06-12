@@ -10,6 +10,10 @@ public class ProductService {
 
     ProductDAO productDAO = new ProductDAOImpl();
 
+    public Product getProductByCode(Long l) {
+        return this.productDAO.getProduct(l);
+    }
+
     public void addProduct(Product product) {
         productDAO.addProduct(product);
     }

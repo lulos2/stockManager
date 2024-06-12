@@ -23,8 +23,8 @@ public class ProductList extends ArrayList<Product>{
         products.remove(product);
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public ArrayList<Product> getProducts() {
+        return new ArrayList<Product>(products);
     }
 
     public void updateProduct(Product product) {

@@ -68,7 +68,7 @@ public class ProductDAOImpl implements ProductDAO {
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (rs.next()) {
                     return new Product(rs.getString("type"), rs.getString("brand"),
-                            rs.getLong("code"), rs.getDouble("cost"), rs.getDouble("price"), rs.getInt("quantity"),rs.getString("name"), rs.getString("unitType"));
+                            rs.getLong("code"), rs.getDouble("cost"), rs.getDouble("price"), rs.getInt("quantity"),rs.getString("description"), rs.getString("unitType"));
                 }
             }
         } catch (SQLException e) {

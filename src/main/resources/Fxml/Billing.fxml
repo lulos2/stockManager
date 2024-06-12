@@ -42,19 +42,19 @@
         </HBox>
       <TableView fx:id="tblProductsBill" prefHeight="470.0" prefWidth="906.0">
         <columns>
-          <TableColumn prefWidth="149.60000038146973" text="Productos" />
-          <TableColumn prefWidth="224.79998779296875" text="Tipo y Marca" />
-            <TableColumn prefWidth="140.80001831054688" text="Cantidad" />
-            <TableColumn prefWidth="115.99993896484375" text="Unidad" />
-            <TableColumn prefWidth="120.79998779296875" text="Precio x Unidad" />
-            <TableColumn prefWidth="152.00003662109373" text="Importe" />
+          <TableColumn fx:id="colProductCode" prefWidth="149.60000038146973" text="Productos" />
+          <TableColumn fx:id="colProductTypeAndBrand" prefWidth="224.79998779296875" text="Tipo y Marca" />
+            <TableColumn fx:id="colProductCant" prefWidth="140.80001831054688" text="Cantidad" />
+            <TableColumn fx:id="colProductUnitType" prefWidth="115.99993896484375" text="Unidad" />
+            <TableColumn fx:id="colProductUnitPrice" prefWidth="120.79998779296875" text="Precio x Unidad" />
+            <TableColumn fx:id="colProductTotalPrice" prefWidth="152.00003662109373" text="Importe" />
         </columns>
       </TableView>
       <TableView fx:id="tblServiceList" prefHeight="274.0" prefWidth="906.0">
          <columns>
-            <TableColumn prefWidth="149.60000038146973" text="servicio" />
-            <TableColumn prefWidth="511.19996643066406" text="Descripcion" />
-            <TableColumn prefWidth="244.800048828125" text="Importe" />
+            <TableColumn fx:id="colService" prefWidth="149.60000038146973" text="servicio" />
+            <TableColumn fx:id="colServiceDescription" prefWidth="511.19996643066406" text="Descripcion" />
+            <TableColumn fx:id="colServicePrice" prefWidth="244.800048828125" text="Importe" />
          </columns>
       </TableView>
     </VBox>
