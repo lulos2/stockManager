@@ -7,13 +7,15 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductList extends ArrayList<Product>{
+public class ProductList {
 
     private final ObservableList<Product> products;
     public ProductList() {
         this.products = FXCollections.observableArrayList();
     }
-
+    public ProductList(List<Product> products) {
+        this.products = FXCollections.observableArrayList(products);
+    }
 
     public void addProduct(Product product) {
         products.add(product);

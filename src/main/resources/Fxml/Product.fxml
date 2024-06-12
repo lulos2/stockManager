@@ -11,7 +11,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.stockmanager.controller.ProductController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="777.0" layoutX="346.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="905.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="545.0" layoutX="346.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="905.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9d9d9" height="545.0" layoutX="4.0" layoutY="14.0" stroke="BLACK" strokeType="INSIDE" width="313.0" />
       <Label layoutX="112.0" layoutY="27.0" text="Gestionar Productos" />
       <Label layoutX="45.0" layoutY="117.0" text="marca" />
@@ -32,7 +32,7 @@
       <Button layoutX="177.0" layoutY="429.0" mnemonicParsing="false" onAction="#updateProduct" text="Actualizar" />
       <Button layoutX="137.0" layoutY="478.0" mnemonicParsing="false" onAction="#deleteProduct" text="Eliminar" />
       <Label layoutX="771.0" layoutY="26.0" prefHeight="18.0" prefWidth="108.0" text="Lista de Productos" />
-      <TableView fx:id="tblProduct" layoutX="361.0" layoutY="57.0" prefHeight="718.0" prefWidth="872.0">
+      <TableView fx:id="tblProduct" layoutX="361.0" layoutY="57.0" prefHeight="451.0" prefWidth="872.0">
         <columns>
           <TableColumn fx:id="colType" prefWidth="84.0" text="tipo" />
           <TableColumn fx:id="colBrand" prefWidth="111.20001220703125" text="marca" />
@@ -48,6 +48,6 @@
       <CheckBox fx:id="chkLts" layoutX="227.0" layoutY="283.0" mnemonicParsing="false" onMouseClicked="#onlyOneSelected" text="Lts" />
       <CheckBox fx:id="chkUnity" layoutX="188.0" layoutY="283.0" mnemonicParsing="false" onMouseClicked="#onlyOneSelected" text="U" />
       <Label layoutX="174.0" layoutY="283.0" text="x" />
-      <Button layoutX="38.0" layoutY="601.0" mnemonicParsing="false" onAction="#goToBilling" prefHeight="155.0" prefWidth="255.0" text="ir a facturacion" />
+      <Button layoutX="990.0" layoutY="600.0" mnemonicParsing="false" onAction="#goToBilling" prefHeight="155.0" prefWidth="255.0" text="ir a facturacion" />
    </children>
 </AnchorPane>

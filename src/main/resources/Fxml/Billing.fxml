@@ -85,27 +85,27 @@
          <Font size="14.0" />
       </font>
    </Label>
-   <Label fx:id="productsPriceCount" layoutX="1207.0" layoutY="155.0" prefHeight="18.0" prefWidth="60.0" text="0">
+   <Label fx:id="productsPriceCount" layoutX="1169.0" layoutY="153.0" prefHeight="18.0" prefWidth="60.0" text="0">
       <font>
          <Font size="14.0" />
       </font>
    </Label>
-   <Label fx:id="servicePriceCount" layoutX="1207.0" layoutY="180.0" prefHeight="18.0" prefWidth="60.0" text="0">
+   <Label fx:id="servicePriceCount" layoutX="1169.0" layoutY="178.0" prefHeight="18.0" prefWidth="60.0" text="0">
       <font>
          <Font size="14.0" />
       </font>
    </Label>
-   <Label fx:id="subTotalCount" layoutX="1207.0" layoutY="207.0" prefHeight="18.0" prefWidth="60.0" text="0">
+   <Label fx:id="subTotalCount" layoutX="1169.0" layoutY="205.0" prefHeight="18.0" prefWidth="60.0" text="0">
       <font>
          <Font size="14.0" />
       </font>
    </Label>
-   <Label fx:id="desc" layoutX="1207.0" layoutY="236.0" prefHeight="18.0" prefWidth="60.0" text="0">
+   <Label fx:id="desc" layoutX="1169.0" layoutY="234.0" prefHeight="18.0" prefWidth="60.0" text="0">
       <font>
          <Font size="14.0" />
       </font>
    </Label>
-   <Label fx:id="totalcount" layoutX="1207.0" layoutY="265.0" prefHeight="18.0" prefWidth="60.0" text="0">
+   <Label fx:id="totalcount" layoutX="1169.0" layoutY="263.0" prefHeight="18.0" prefWidth="60.0" text="0">
       <font>
          <Font name="System Bold" size="14.0" />
       </font>
@@ -113,8 +113,8 @@
    <Line endX="118.00006103515625" layoutX="1149.0" layoutY="225.0" opacity="0.19" startX="-212.39996337890625" />
    <Line endX="128.50006103515625" layoutX="1138.0" layoutY="173.0" opacity="0.19" startX="-200.5999755859375" />
    <Line endX="128.50006103515625" layoutX="1138.0" layoutY="198.0" opacity="0.19" startX="-203.0" />
-   <Line endX="96.50006103515625" layoutX="1170.0" layoutY="254.0" startX="-236.5999755859375" />
-   <Line endX="-100.0" endY="-148.60003662109375" layoutX="1288.0" layoutY="290.0" opacity="0.1" startX="-100.0" />
+   <Line endX="96.50006103515625" layoutX="1170.0" layoutY="254.0" startX="-233.0" startY="-1.0" />
+   <Line endX="-100.0" endY="-148.60003662109375" layoutX="1250.0" layoutY="288.0" opacity="0.1" startX="-100.0" />
    <Button layoutX="940.0" layoutY="311.0" mnemonicParsing="false" onAction="#deleteItem" text="Eliminar Seleccionado" />
-   <Button layoutX="981.0" layoutY="597.0" mnemonicParsing="false" onAction="#goToProduct" prefHeight="155.0" prefWidth="255.0" text="ir a productos" />
+   <Button layoutX="990.0" layoutY="600.0" mnemonicParsing="false" onAction="#goToProduct" prefHeight="155.0" prefWidth="255.0" text="ir a productos" />
 </AnchorPane>

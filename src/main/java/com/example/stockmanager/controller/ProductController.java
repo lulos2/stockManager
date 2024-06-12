@@ -4,24 +4,21 @@ import com.example.stockmanager.model.ProductList;
 import com.example.stockmanager.service.ProductService;
 import com.example.stockmanager.util.Enums;
 import com.example.stockmanager.util.Paths;
+import com.example.stockmanager.util.ShowAlert;
 import com.example.stockmanager.util.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
 
-import java.io.IOException;
 
 public class ProductController {
 
     private final ProductService productService = new ProductService();
-    private ProductList productList;
+    private final ProductList productList;
     @FXML
     private TableView <Product> tblProduct;
     @FXML
@@ -73,22 +70,26 @@ public class ProductController {
 
     void addProduct() {
         if(txtType.getText().isEmpty() || txtBrand.getText().isEmpty() || txtCode.getText().isEmpty() || txtCost.getText().isEmpty() || txtPrice.getText().isEmpty() || txtQuantity.getText().isEmpty()) return;
-        if(productList.existCode(Long.parseLong(txtCode.getText()))) return;
-        if(Integer.parseInt(txtQuantity.getText()) < 0) return;
-        Product product = new Product(
-                txtType.getText(),
-                txtBrand.getText(),
-                Long.parseLong(txtCode.getText()),
-                Double.parseDouble(txtCost.getText()),
-                Double.parseDouble(txtPrice.getText()),
-                Integer.parseInt(txtQuantity.getText()),
-                txtDescription.getText(),
-                unitType()
-        );
-        productService.addProduct(product);
-        productList.addProduct(product);
-        updateTable();
-        clearFields();
+        if(productList.existCode(Long.parseLong(txtCode.getText()))) {
+            ShowAlert.showAlertProductExists();
+        }else {
+            if (Integer.parseInt(txtQuantity.getText()) < 0) return;
+            Product product = new Product(
+                    txtType.getText(),
+                    txtBrand.getText(),
+                    Long.parseLong(txtCode.getText()),
+                    Double.parseDouble(txtCost.getText()),
+                    Double.parseDouble(txtPrice.getText()),
+                    Integer.parseInt(txtQuantity.getText()),
+                    txtDescription.getText(),
+                    unitType()
+            );
+            productService.addProduct(product);
+            productList.addProduct(product);
+            updateTable();
+            clearFields();
+            ShowAlert.showAlertProductAdded();
+        }
     }
 
     private String unitType() {
@@ -142,13 +143,9 @@ public class ProductController {
 
     public void loadProductData() {
         for (Product product : productService.getAllProducts()) {
-            productList.addProduct(product);
+            this.productList.addProduct(product);
         }
         updateTable();
-    }
-
-    public void setProductList(ProductList productList) {
-        this.productList = productList;
     }
 
     private void clearFields() {
@@ -214,6 +211,27 @@ public class ProductController {
         StageManager.changeScene(Paths.BILLING_FXML);
     }
 
+    void copiCode(){
+        tblProduct.setRowFactory(tv -> {
+            TableRow<Product> row = new TableRow<>();
+            MenuItem mi = new MenuItem("Copiar codigo");
+            mi.setOnAction(event -> {
+                Product product = row.getItem();
+                Clipboard clipboard = Clipboard.getSystemClipboard();
+                ClipboardContent content = new ClipboardContent();
+                content.putString(String.valueOf(product.getCode()));
+                clipboard.setContent(content);
+            });
+            ContextMenu contextMenu = new ContextMenu(mi);
+            row.contextMenuProperty().bind(
+                    javafx.beans.binding.Bindings.when(row.emptyProperty())
+                            .then((ContextMenu) null)
+                            .otherwise(contextMenu)
+            );
+            return row;
+        });
+    }
+
     @FXML
     void initialize() {
         colType.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -229,5 +247,6 @@ public class ProductController {
             if(tblProduct.getSelectionModel().getSelectedItem() != null) updateFields();
         });
         loadProductData();
+        copiCode();
     }
 }

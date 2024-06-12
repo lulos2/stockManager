@@ -26,8 +26,6 @@ public class App extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Paths.PRODUCT_FXML));
         AnchorPane pane = loader.load();
 
-        ProductController controller = loader.getController();
-        controller.setProductList(new ProductList());
 
         Scene scene = new Scene(pane);
         StageManager.getPrimaryStage().setScene(scene);

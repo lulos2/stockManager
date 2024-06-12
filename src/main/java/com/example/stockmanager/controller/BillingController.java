@@ -6,6 +6,7 @@ import com.example.stockmanager.model.Service;
 import com.example.stockmanager.service.ProductService;
 import com.example.stockmanager.util.DataStorage;
 import com.example.stockmanager.util.Paths;
+import com.example.stockmanager.util.ShowAlert;
 import com.example.stockmanager.util.StageManager;
 import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
@@ -115,6 +116,7 @@ public class BillingController {
         tblProductsBill.getItems().add(product);
         updateProductTable();
         clearProductFields();
+        ShowAlert.showAlertProductAdded();
     }
 
     private void clearProductFields() {
