@@ -11,10 +11,17 @@ public class Service {
     public Service() {
     }
 
+
     public Service(String name, double price, int duration, String description) {
         this.name = name;
         this.price = price;
         this.duration = duration;
+        this.description = description;
+    }
+
+    public Service(String name, String description, double price) {
+        this.name = name;
+        this.price = price;
         this.description = description;
     }
 

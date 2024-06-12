@@ -74,6 +74,7 @@ public class ProductController {
     void addProduct() {
         if(txtType.getText().isEmpty() || txtBrand.getText().isEmpty() || txtCode.getText().isEmpty() || txtCost.getText().isEmpty() || txtPrice.getText().isEmpty() || txtQuantity.getText().isEmpty()) return;
         if(productList.existCode(Long.parseLong(txtCode.getText()))) return;
+        if(Integer.parseInt(txtQuantity.getText()) < 0) return;
         Product product = new Product(
                 txtType.getText(),
                 txtBrand.getText(),

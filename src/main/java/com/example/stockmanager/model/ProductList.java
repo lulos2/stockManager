@@ -1,19 +1,19 @@
 package com.example.stockmanager.model;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ProductList extends ArrayList<Product>{
 
-    List<Product> products;
-
+    private final ObservableList<Product> products;
     public ProductList() {
-        this.products = new ArrayList<Product>();
+        this.products = FXCollections.observableArrayList();
     }
 
-    public ProductList(List<Product> products) {
-        this.products = products;
-    }
 
     public void addProduct(Product product) {
         products.add(product);
@@ -23,8 +23,8 @@ public class ProductList extends ArrayList<Product>{
         products.remove(product);
     }
 
-    public ArrayList<Product> getProducts() {
-        return new ArrayList<Product>(products);
+    public List<Product> getProducts() {
+        return this.products;
     }
 
     public void updateProduct(Product product) {
@@ -40,14 +40,19 @@ public class ProductList extends ArrayList<Product>{
         }
     }
 
-    public boolean existCode(Long l) {
-        for (Product p : this.products) {
-            if (p.getCode().equals(l)) {
-                System.out.println("Product with code " + l + " already exists.");
-                return true;
-            }
-        }
-        return false;
+    public boolean existCode(Long code) {
+        return this.products.stream().anyMatch(product -> product.getCode().equals(code));
     }
 
+    public double getTotalPrice() {
+        double total = 0;
+        for (Product product : products) {
+            total += product.getPrice() * product.getQuantity();
+        }
+        return total;
+    }
+
+    public void addListener(ListChangeListener<Product> productListChangeListener) {
+        this.products.addListener(productListChangeListener);
+    }
 }

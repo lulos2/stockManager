@@ -1,13 +1,17 @@
 package com.example.stockmanager.controller;
+import com.example.stockmanager.model.Bill;
 import com.example.stockmanager.model.Product;
 import com.example.stockmanager.model.ProductList;
 import com.example.stockmanager.model.Service;
 import com.example.stockmanager.service.ProductService;
+import com.example.stockmanager.util.DataStorage;
 import com.example.stockmanager.util.Paths;
 import com.example.stockmanager.util.StageManager;
 import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -17,13 +21,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
-import java.util.ArrayList;
-
 public class BillingController {
 
     ProductService productService = new ProductService();
-    ProductList productListToBill = new ProductList();
-    ArrayList<Service> serviceListToBill = new ArrayList<>();
+
+    ProductList productListToBill;
+    ObservableList<Service> serviceListToBill;
 
     @FXML
     private Label desc;
@@ -91,6 +94,11 @@ public class BillingController {
     @FXML
     private TableColumn<Service, Double> colServicePrice;
 
+    public BillingController() {
+        this.productListToBill = DataStorage.getProductListToBill();
+        this.serviceListToBill = DataStorage.getServiceListToBill();
+    }
+
     @FXML
     void addProductToBillList(ActionEvent event) {
         addProductToBillList();
@@ -101,7 +109,7 @@ public class BillingController {
         if(productListToBill.existCode(Long.parseLong(txtProductCode.getText()))) return;
         Product product = this.productService.getProductByCode(Long.parseLong(txtProductCode.getText()));
         if(product == null) return;
-        if(product.getQuantity() < Integer.parseInt(txtQuantity.getText())) return;
+        if(product.getQuantity() < Integer.parseInt(txtQuantity.getText()) || Integer.parseInt(txtQuantity.getText()) <= 0) return;
         product.setQuantity(Integer.parseInt(txtQuantity.getText()));
         productListToBill.addProduct(product);
         tblProductsBill.getItems().add(product);
@@ -122,7 +130,28 @@ public class BillingController {
 
     @FXML
     void addServiceToBillList(ActionEvent event) {
+        addServiceToBillList();
+    }
 
+    void addServiceToBillList() {
+        if(txtServiceName.getText().isEmpty() || txtServicePrice.getText().isEmpty()) return;
+        Service service = new Service(txtServiceName.getText(), txtServiceDesc.getText(), Double.parseDouble(txtServicePrice.getText()));
+        serviceListToBill.add(service);
+        tblServiceList.getItems().add(service);
+        updateServiceTable();
+        clearServiceFields();
+    }
+
+    private void clearServiceFields() {
+        txtServiceName.clear();
+        txtServiceDesc.clear();
+        txtServicePrice.clear();
+    }
+
+    private void updateServiceTable() {
+        tblServiceList.getItems().clear();
+        tblServiceList.getItems().addAll(serviceListToBill);
+        tblServiceList.refresh();
     }
 
     @FXML
@@ -132,12 +161,21 @@ public class BillingController {
 
     @FXML
     void increaseQuantity(ActionEvent event) {
-        txtQuantity.setText(String.valueOf(Integer.parseInt(txtQuantity.getText()) + 1));
+        if(!txtQuantity.getText().isEmpty()) {
+            txtQuantity.setText(String.valueOf(Integer.parseInt(txtQuantity.getText()) + 1));
+        }else {
+            txtQuantity.setText("1");
+        }
     }
 
     @FXML
     void deleteItem(ActionEvent event) {
-
+        Product product = tblProductsBill.getSelectionModel().getSelectedItem();
+        productListToBill.removeProduct(product);
+        updateProductTable();
+        Service service = tblServiceList.getSelectionModel().getSelectedItem();
+        serviceListToBill.remove(service);
+        updateServiceTable();
     }
 
     @FXML
@@ -148,20 +186,6 @@ public class BillingController {
     @FXML
     void goToProduct(ActionEvent event) {
         StageManager.changeScene(Paths.PRODUCT_FXML);
-    }
-
-    @FXML
-    void initialize(){
-        colProductCant.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        colProductCode.setCellValueFactory(new PropertyValueFactory<>("code"));
-        colProductTypeAndBrand.setCellValueFactory(new PropertyValueFactory<>("type"));
-        colProductUnitPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
-        colProductUnitType.setCellValueFactory(new PropertyValueFactory<>("unitType"));
-        colProductTotalPrice.setCellValueFactory(importCalculator());
-
-        colService.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colServiceDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-        colServicePrice.setCellValueFactory(new PropertyValueFactory<>("price"));
     }
 
     private Callback<TableColumn.CellDataFeatures<Product, Double>, ObservableValue<Double>> importCalculator() {
@@ -190,5 +214,44 @@ public class BillingController {
                 }
             };
         };
+    }
+
+    public void calculateTotal() {
+        double productsPrice = productListToBill.getTotalPrice();
+        double servicePrice = serviceListToBill.stream().mapToDouble(Service::getPrice).sum();
+        double subTotal = productsPrice + servicePrice;
+        double total = subTotal * 1.16;
+        productsPriceCount.setText(String.valueOf(productsPrice));
+        servicePriceCount.setText(String.valueOf(servicePrice));
+        subTotalCount.setText(String.valueOf(subTotal));
+        totalcount.setText(String.valueOf(total));
+    }
+
+    @FXML
+    void initialize(){
+        colProductCant.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        colProductCode.setCellValueFactory(new PropertyValueFactory<>("code"));
+        colProductTypeAndBrand.setCellValueFactory(new PropertyValueFactory<>("type"));
+        colProductUnitPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        colProductUnitType.setCellValueFactory(new PropertyValueFactory<>("unitType"));
+        colProductTotalPrice.setCellValueFactory(importCalculator());
+
+        colService.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colServiceDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        colServicePrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        tblProductsBill.getItems().clear();
+        tblProductsBill.getItems().addAll(this.productListToBill.getProducts());
+        tblProductsBill.refresh();
+
+        tblServiceList.getItems().clear();
+        tblServiceList.getItems().addAll(serviceListToBill);
+        tblServiceList.refresh();
+
+        productListToBill.addListener(c -> calculateTotal());
+        serviceListToBill.addListener((ListChangeListener<Service>) c -> calculateTotal());
+
+        calculateTotal();
+
     }
 }
