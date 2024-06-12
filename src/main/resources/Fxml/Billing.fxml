@@ -24,9 +24,9 @@
             <Label text="Código del producto:" />
             <TextField fx:id="txtProductCode" prefHeight="26.0" prefWidth="98.0" />
             <Label text="Cantidad:" />
-            <Button minWidth="32.0" onAction="#increaseQuantity" prefHeight="30.0" prefWidth="32.0" text="-" />
+            <Button minWidth="32.0" onAction="#decreaseQuantity" prefHeight="30.0" prefWidth="32.0" text="-" />
             <TextField fx:id="txtQuantity" prefHeight="26.0" prefWidth="48.0" />
-            <Button minWidth="36.0" onAction="#decreaseQuantity" prefHeight="30.0" prefWidth="36.0" text="+" />
+            <Button minWidth="36.0" onAction="#increaseQuantity" prefHeight="30.0" prefWidth="36.0" text="+" />
             <Button onAction="#addProductToBillList" prefHeight="29.0" prefWidth="186.0" text="Agregar Producto" />
         </HBox>
         <HBox prefHeight="30.0" prefWidth="760.0" spacing="10">

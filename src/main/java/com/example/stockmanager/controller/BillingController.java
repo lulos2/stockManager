@@ -156,12 +156,16 @@ public class BillingController {
 
     @FXML
     void decreaseQuantity(ActionEvent event) {
+        if(txtQuantity.getText().isEmpty()) return;
+        if(Integer.parseInt(txtQuantity.getText()) <= 1) return;
         txtQuantity.setText(String.valueOf(Integer.parseInt(txtQuantity.getText()) - 1));
     }
 
     @FXML
     void increaseQuantity(ActionEvent event) {
+        if(txtProductCode.getText().isEmpty()) return;
         if(!txtQuantity.getText().isEmpty()) {
+            if(productService.getProductByCode(Long.parseLong(txtProductCode.getText())).getQuantity() < Integer.parseInt(txtQuantity.getText())) return;
             txtQuantity.setText(String.valueOf(Integer.parseInt(txtQuantity.getText()) + 1));
         }else {
             txtQuantity.setText("1");
