@@ -15,12 +15,11 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
+
+import java.text.NumberFormat;
 
 public class BillingController {
 
@@ -227,14 +226,44 @@ public class BillingController {
         double servicePrice = serviceListToBill.stream().mapToDouble(Service::getPrice).sum();
         double subTotal = productsPrice + servicePrice;
         double total = subTotal * 1.16;
-        productsPriceCount.setText(String.valueOf(productsPrice));
-        servicePriceCount.setText(String.valueOf(servicePrice));
-        subTotalCount.setText(String.valueOf(subTotal));
-        totalcount.setText(String.valueOf(total));
+
+        NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+
+        productsPriceCount.setText(currencyFormat.format(productsPrice));
+        servicePriceCount.setText(currencyFormat.format(servicePrice));
+        subTotalCount.setText(currencyFormat.format(subTotal));
+        totalcount.setText(currencyFormat.format(total));
     }
 
     @FXML
     void initialize(){
+
+        colProductUnitPrice.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+                    setText(currencyFormat.format(item));
+                }
+            }
+        });
+        colProductTotalPrice.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+                    setText(currencyFormat.format(item));
+                }
+            }
+        });
         colProductCant.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colProductCode.setCellValueFactory(new PropertyValueFactory<>("code"));
         colProductTypeAndBrand.setCellValueFactory(new PropertyValueFactory<>("type"));

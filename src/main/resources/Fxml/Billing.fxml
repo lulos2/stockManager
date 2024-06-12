@@ -58,7 +58,7 @@
          </columns>
       </TableView>
     </VBox>
-   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#26ff0029" height="245.0" layoutX="934.0" layoutY="141.0" stroke="#737070" strokeType="INSIDE" width="334.0" />
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#26ff0029" height="245.0" layoutX="934.0" layoutY="141.0" stroke="#737070" strokeType="INSIDE" width="341.0" />
    <Button layoutX="1109.0" layoutY="311.0" mnemonicParsing="false" onAction="#saveBill" text="Confirmar Factura" />
    <Label layoutX="938.0" layoutY="152.0" text="Productos:">
       <font>
@@ -85,27 +85,27 @@
          <Font size="14.0" />
       </font>
    </Label>
-   <Label fx:id="productsPriceCount" layoutX="1169.0" layoutY="153.0" prefHeight="18.0" prefWidth="60.0" text="0">
+   <Label fx:id="productsPriceCount" layoutX="1169.0" layoutY="153.0" prefHeight="20.0" prefWidth="98.0" text="0">
       <font>
          <Font size="14.0" />
       </font>
    </Label>
-   <Label fx:id="servicePriceCount" layoutX="1169.0" layoutY="178.0" prefHeight="18.0" prefWidth="60.0" text="0">
+   <Label fx:id="servicePriceCount" layoutX="1169.0" layoutY="178.0" prefHeight="20.0" prefWidth="98.0" text="0">
       <font>
          <Font size="14.0" />
       </font>
    </Label>
-   <Label fx:id="subTotalCount" layoutX="1169.0" layoutY="205.0" prefHeight="18.0" prefWidth="60.0" text="0">
+   <Label fx:id="subTotalCount" layoutX="1169.0" layoutY="205.0" prefHeight="20.0" prefWidth="98.0" text="0">
       <font>
          <Font size="14.0" />
       </font>
    </Label>
-   <Label fx:id="desc" layoutX="1169.0" layoutY="234.0" prefHeight="18.0" prefWidth="60.0" text="0">
+   <Label fx:id="desc" layoutX="1169.0" layoutY="234.0" prefHeight="20.0" prefWidth="98.0" text="0">
       <font>
          <Font size="14.0" />
       </font>
    </Label>
-   <Label fx:id="totalcount" layoutX="1169.0" layoutY="263.0" prefHeight="18.0" prefWidth="60.0" text="0">
+   <Label fx:id="totalcount" layoutX="1169.0" layoutY="263.0" prefHeight="18.0" prefWidth="98.0" text="0">
       <font>
          <Font name="System Bold" size="14.0" />
       </font>

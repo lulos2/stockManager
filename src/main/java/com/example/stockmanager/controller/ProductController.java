@@ -14,6 +14,8 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
 
+import java.text.NumberFormat;
+
 
 public class ProductController {
 
@@ -234,6 +236,34 @@ public class ProductController {
 
     @FXML
     void initialize() {
+        colPrice.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+                    setText(currencyFormat.format(item));
+                }
+            }
+        });
+
+        colCost.setCellFactory(column -> new TableCell<>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+                    setText(currencyFormat.format(item));
+                }
+            }
+        });
+
         colType.setCellValueFactory(new PropertyValueFactory<>("type"));
         colBrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
         colCode.setCellValueFactory(new PropertyValueFactory<>("code"));
