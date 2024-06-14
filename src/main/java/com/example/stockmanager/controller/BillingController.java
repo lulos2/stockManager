@@ -222,7 +222,7 @@ public class BillingController {
 
     private Bill createBill() {
         if (productListToBill.getProducts().isEmpty() && serviceListToBill.isEmpty()) return null;
-        if(txtBillName.getText() == null) this.txtBillName.setText("Cliente");
+        if(txtBillName.getText().isEmpty()) this.txtBillName.setText("Cliente");
         return new Bill(
                 productListToBill,
                 serviceListToBill,
