@@ -168,7 +168,7 @@ public class BillingController {
     void increaseQuantity(ActionEvent event) {
         if(txtProductCode.getText().isEmpty()) return;
         if(!txtQuantity.getText().isEmpty()) {
-            if(productService.getProductByCode(Long.parseLong(txtProductCode.getText())).getQuantity() < Integer.parseInt(txtQuantity.getText())) return;
+            if(productService.getProductByCode(Long.parseLong(txtProductCode.getText())).getQuantity() <= Integer.parseInt(txtQuantity.getText())) return;
             txtQuantity.setText(String.valueOf(Integer.parseInt(txtQuantity.getText()) + 1));
         }else {
             txtQuantity.setText("1");
@@ -190,6 +190,11 @@ public class BillingController {
         Bill bill = createBill();
         if(bill != null){
             this.billingService.addBill(bill);
+            ShowAlert.showAlertBillAdded();
+            this.serviceListToBill.clear();
+            this.productListToBill.getProducts().clear();
+            updateProductTable();
+            updateServiceTable();
         }
     }
 

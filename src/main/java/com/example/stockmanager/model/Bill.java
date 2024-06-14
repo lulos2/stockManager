@@ -1,13 +1,15 @@
 package com.example.stockmanager.model;
 
+import javafx.collections.ObservableList;
+
+import java.sql.Date;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 public class Bill {
 
-    private int id;
+    private Long id;
     private ProductList products;
-    private ArrayList<Service> services;
+    private ObservableList<Service> services;
     private String client;
     private LocalDateTime date;
     private double total;
@@ -15,15 +17,24 @@ public class Bill {
     public Bill() {
     }
 
-    public Bill(ProductList products, ArrayList<Service> services, String client, LocalDateTime date, Double total) {
+    public Bill(Long id, ProductList products, ObservableList<Service> services, String client, Date date, double total) {
+        this.id = id;
         this.products = products;
         this.services = services;
         this.client = client;
-        this.date = date;
+        this.date = LocalDateTime.of(date.toLocalDate(), LocalDateTime.now().toLocalTime());
         this.total = total;
     }
 
-    public int getId() {
+    public Bill(ProductList products, ObservableList<Service> services, String client, Double total) {
+        this.products = products;
+        this.services = services;
+        this.client = client;
+        this.date = LocalDateTime.now();
+        this.total = total;
+    }
+
+    public Long getId() {
         return id;
     }
 
@@ -36,11 +47,11 @@ public class Bill {
         this.products = products;
     }
 
-    public ArrayList<Service> getServices() {
+    public ObservableList<Service> getServices() {
         return services;
     }
 
-    public void setServices(ArrayList<Service> services) {
+    public void setServices(ObservableList<Service> services) {
         this.services = services;
     }
 
@@ -52,8 +63,8 @@ public class Bill {
         this.client = client;
     }
 
-    public LocalDateTime getDate() {
-        return date;
+    public Date getDate() {
+        return Date.valueOf(date.toLocalDate());
     }
 
     public void setDate(LocalDateTime date) {
@@ -66,5 +77,9 @@ public class Bill {
 
     public void setTotal(double total) {
         this.total = total;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

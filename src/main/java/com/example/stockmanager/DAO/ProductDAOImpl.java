@@ -120,4 +120,14 @@ public class ProductDAOImpl implements ProductDAO {
         }
         return products;
     }
+
+    public void discountStock(Connection connection, Long productCode, int quantityLess) throws SQLException {
+        String sqlUpdateStock = "UPDATE product SET quantity = quantity - ? WHERE code = ?";
+
+        try (PreparedStatement pstmtUpdateStock = connection.prepareStatement(sqlUpdateStock)) {
+            pstmtUpdateStock.setInt(1, quantityLess);
+            pstmtUpdateStock.setLong(2, productCode);
+            pstmtUpdateStock.executeUpdate();
+        }
+    }
 }
