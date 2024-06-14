@@ -3,6 +3,7 @@ import com.example.stockmanager.model.Bill;
 import com.example.stockmanager.model.Product;
 import com.example.stockmanager.model.ProductList;
 import com.example.stockmanager.model.Service;
+import com.example.stockmanager.service.BillingService;
 import com.example.stockmanager.service.ProductService;
 import com.example.stockmanager.util.DataStorage;
 import com.example.stockmanager.util.Paths;
@@ -24,6 +25,7 @@ import java.text.NumberFormat;
 public class BillingController {
 
     ProductService productService = new ProductService();
+    BillingService billingService = new BillingService();
 
     ProductList productListToBill;
     ObservableList<Service> serviceListToBill;
@@ -185,7 +187,21 @@ public class BillingController {
 
     @FXML
     void saveBill(ActionEvent event) {
+        Bill bill = createBill();
+        if(bill != null){
+            this.billingService.addBill(bill);
+        }
+    }
 
+    private Bill createBill() {
+        if (productListToBill.getProducts().isEmpty() && serviceListToBill.isEmpty()) return null;
+        if(txtBillName.getText() == null) this.txtBillName.setText("Cliente");
+        return new Bill(
+                productListToBill,
+                serviceListToBill,
+                txtBillName.getText(),
+                Double.parseDouble(totalcount.getText().replace(Character.toString(','), "").replace('$','0'))
+        );
     }
 
     @FXML
@@ -237,7 +253,6 @@ public class BillingController {
 
     @FXML
     void initialize(){
-
         colProductUnitPrice.setCellFactory(column -> new TableCell<>() {
             @Override
             protected void updateItem(Double item, boolean empty) {
@@ -287,6 +302,5 @@ public class BillingController {
         serviceListToBill.addListener((ListChangeListener<Service>) c -> calculateTotal());
 
         calculateTotal();
-
     }
 }

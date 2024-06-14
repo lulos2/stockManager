@@ -101,7 +101,6 @@ public class DatabaseUtil {
             String sql = "CREATE TABLE IF NOT EXISTS Bill_Service (" +
                     "bill_id INTEGER," +
                     "service_id INTEGER," +
-                    "quantity INTEGER NOT NULL," +
                     "FOREIGN KEY(bill_id) REFERENCES Bills(id)," +
                     "FOREIGN KEY(service_id) REFERENCES Service(id)" +
                     ");";

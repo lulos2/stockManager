@@ -71,12 +71,25 @@ public class ProductController {
     }
 
     void addProduct() {
-        if(txtType.getText().isEmpty() || txtBrand.getText().isEmpty() || txtCode.getText().isEmpty() || txtCost.getText().isEmpty() || txtPrice.getText().isEmpty() || txtQuantity.getText().isEmpty()) return;
-        if(productList.existCode(Long.parseLong(txtCode.getText()))) {
-            ShowAlert.showAlertProductExists();
-        }else {
-            if (Integer.parseInt(txtQuantity.getText()) < 0) return;
-            Product product = new Product(
+        Product product = createProduct();
+        if (product != null) {
+            productService.addProduct(product);
+            productList.addProduct(product);
+            updateTable();
+            clearFields();
+            ShowAlert.showAlertProductAdded();
+        }
+    }
+
+    public Product createProduct(){
+        if(txtType.getText().isEmpty() || txtBrand.getText().isEmpty() || txtCode.getText().isEmpty() || txtCost.getText().isEmpty() || txtPrice.getText().isEmpty() || txtQuantity.getText().isEmpty()) return null;
+        try {
+            if (Integer.parseInt(txtQuantity.getText()) < 0) return null;
+            if(productList.existCode(Long.parseLong(txtCode.getText()))) {
+                ShowAlert.showAlertProductExists();
+                return null;
+            }
+            return new Product(
                     txtType.getText(),
                     txtBrand.getText(),
                     Long.parseLong(txtCode.getText()),
@@ -86,11 +99,10 @@ public class ProductController {
                     txtDescription.getText(),
                     unitType()
             );
-            productService.addProduct(product);
-            productList.addProduct(product);
-            updateTable();
-            clearFields();
-            ShowAlert.showAlertProductAdded();
+        }
+        catch (NumberFormatException e){
+            System.out.println("Error: " + e.getMessage());
+            return null;
         }
     }
 

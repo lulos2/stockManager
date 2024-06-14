@@ -1,7 +1,5 @@
 package com.example.stockmanager;
 
-import com.example.stockmanager.controller.ProductController;
-import com.example.stockmanager.model.ProductList;
 import com.example.stockmanager.util.DatabaseUtil;
 import com.example.stockmanager.util.Paths;
 import com.example.stockmanager.util.StageManager;
