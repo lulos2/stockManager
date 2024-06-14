@@ -24,4 +24,12 @@ public class ShowAlert {
         alert.setContentText("La venta se confirmo con exito.");
         alert.showAndWait();
     }
+
+    public static void showAlertProductNotFound() {
+        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.WARNING);
+        alert.setTitle("Producto no encontrado");
+        alert.setHeaderText("Producto no encontrado");
+        alert.setContentText("El producto no se encuentra en la base de datos.");
+        alert.showAndWait();
+    }
 }

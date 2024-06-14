@@ -198,6 +198,28 @@ public class BillingController {
         }
     }
 
+    @FXML
+    public void loadQuantity(){
+        try {
+            if(txtProductCode.getText().isEmpty()) {
+                ShowAlert.showAlertProductNotFound();
+                txtQuantity.setText("");
+                return;
+            }
+            if(txtQuantity.getText().isEmpty()) {
+                txtQuantity.setText("1");
+            }
+            int maxQuantity = productService.getProductByCode(Long.parseLong(txtProductCode.getText())).getQuantity();
+            if(Integer.parseInt(txtQuantity.getText()) > maxQuantity) {
+                txtQuantity.setText(String.valueOf(maxQuantity));
+            }
+        }
+        catch (Exception e){
+            ShowAlert.showAlertProductNotFound();
+            txtQuantity.setText("");
+        }
+    }
+
     private Bill createBill() {
         if (productListToBill.getProducts().isEmpty() && serviceListToBill.isEmpty()) return null;
         if(txtBillName.getText() == null) this.txtBillName.setText("Cliente");
