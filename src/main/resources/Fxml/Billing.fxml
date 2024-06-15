@@ -14,12 +14,10 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.stockmanager.controller.BillingController">
     <VBox layoutX="23.0" layoutY="28.0" prefHeight="762.0" prefWidth="906.0" spacing="10">
-      <HBox spacing="10">
-         <children>
+        <HBox spacing="10">
             <Label text="factura a :" />
             <TextField fx:id="txtBillName" promptText="Nombre" />
-         </children>
-      </HBox>
+        </HBox>
         <HBox spacing="10">
             <Label text="Código del producto:" />
             <TextField fx:id="txtProductCode" prefHeight="26.0" prefWidth="98.0" />
@@ -43,23 +41,25 @@
       <TableView fx:id="tblProductsBill" prefHeight="470.0" prefWidth="906.0">
         <columns>
           <TableColumn fx:id="colProductCode" prefWidth="149.60000038146973" text="Productos" />
-          <TableColumn fx:id="colProductTypeAndBrand" prefWidth="224.79998779296875" text="Tipo y Marca" />
-            <TableColumn fx:id="colProductCant" prefWidth="140.80001831054688" text="Cantidad" />
-            <TableColumn fx:id="colProductUnitType" prefWidth="115.99993896484375" text="Unidad" />
-            <TableColumn fx:id="colProductUnitPrice" prefWidth="120.79998779296875" text="Precio x Unidad" />
-            <TableColumn fx:id="colProductTotalPrice" prefWidth="152.00003662109373" text="Importe" />
+          <TableColumn fx:id="colProductTypeAndBrand" prefWidth="186.3999786376953" text="Tipo y Marca" />
+            <TableColumn fx:id="colProductCant" prefWidth="124.79998779296875" text="Cantidad" />
+            <TableColumn fx:id="colProductUnitType" prefWidth="99.20001220703125" text="Unidad" />
+            <TableColumn fx:id="colProductUnitPrice" prefWidth="143.20001220703125" text="Precio x Unidad" />
+            <TableColumn fx:id="colProductTotalPrice" minWidth="0.0" prefWidth="100.800048828125" text="Importe" />
+            <TableColumn fx:id="colProductActions" prefWidth="99.99993896484375" text="Acciones" />
         </columns>
       </TableView>
       <TableView fx:id="tblServiceList" prefHeight="274.0" prefWidth="906.0">
          <columns>
             <TableColumn fx:id="colService" prefWidth="149.60000038146973" text="servicio" />
-            <TableColumn fx:id="colServiceDescription" prefWidth="511.19996643066406" text="Descripcion" />
-            <TableColumn fx:id="colServicePrice" prefWidth="244.800048828125" text="Importe" />
+            <TableColumn fx:id="colServiceDescription" prefWidth="392.79998779296875" text="Descripcion" />
+            <TableColumn fx:id="colServicePrice" prefWidth="245.5999755859375" text="Importe" />
+            <TableColumn fx:id="colServiceActions" prefWidth="117.60003662109375" text="Acciones" />
          </columns>
       </TableView>
     </VBox>
    <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#26ff0029" height="245.0" layoutX="934.0" layoutY="141.0" stroke="#737070" strokeType="INSIDE" width="341.0" />
-   <Button layoutX="1109.0" layoutY="311.0" mnemonicParsing="false" onAction="#saveBill" text="Confirmar Factura" />
+   <Button layoutX="1148.0" layoutY="343.0" mnemonicParsing="false" onAction="#saveBill" text="Confirmar Factura" />
    <Label layoutX="938.0" layoutY="152.0" text="Productos:">
       <font>
          <Font size="14.0" />
@@ -115,6 +115,11 @@
    <Line endX="128.50006103515625" layoutX="1138.0" layoutY="198.0" opacity="0.19" startX="-203.0" />
    <Line endX="96.50006103515625" layoutX="1170.0" layoutY="254.0" startX="-233.0" startY="-1.0" />
    <Line endX="-100.0" endY="-148.60003662109375" layoutX="1250.0" layoutY="288.0" opacity="0.1" startX="-100.0" />
-   <Button layoutX="940.0" layoutY="311.0" mnemonicParsing="false" onAction="#deleteItem" text="Eliminar Seleccionado" />
    <Button layoutX="990.0" layoutY="600.0" mnemonicParsing="false" onAction="#goToProduct" prefHeight="155.0" prefWidth="255.0" text="ir a productos" />
+   <TextField fx:id="txtDescTotal" layoutX="1165.0" layoutY="92.0" onKeyTyped="#loadDescTotal" prefHeight="26.0" prefWidth="78.0" promptText="Descuento" />
+   <Label layoutX="1249.0" layoutY="95.0" prefHeight="20.0" prefWidth="16.0" text="\%">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
 </AnchorPane>

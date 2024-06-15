@@ -77,7 +77,7 @@ public class ProductController {
             productList.addProduct(product);
             updateTable();
             clearFields();
-            ShowAlert.showAlertProductAdded();
+            ShowAlert.productAdded();
         }
     }
 
@@ -86,7 +86,7 @@ public class ProductController {
         try {
             if (Integer.parseInt(txtQuantity.getText()) < 0) return null;
             if(productList.existCode(Long.parseLong(txtCode.getText()))) {
-                ShowAlert.showAlertProductExists();
+                ShowAlert.productExists();
                 return null;
             }
             return new Product(
@@ -196,7 +196,7 @@ public class ProductController {
         searchProduct();
     }
 
-    public void searchProduct() {
+    void searchProduct() {
         tblProduct.getItems().clear();
         tblProduct.getItems().addAll(productService.searchProduct(txtSearch.getText()));
         tblProduct.refresh();

@@ -1,7 +1,7 @@
 package com.example.stockmanager.util;
 
 public class ShowAlert {
-    public static void showAlertProductAdded() {
+    public static void productAdded() {
         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
         alert.setTitle("Producto añadido");
         alert.setHeaderText(null);
@@ -9,7 +9,7 @@ public class ShowAlert {
         alert.showAndWait();
     }
 
-    public static void showAlertProductExists() {
+    public static void productExists() {
         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.WARNING);
         alert.setTitle("El producto ya existe");
         alert.setHeaderText("El producto ya existe");
@@ -17,7 +17,7 @@ public class ShowAlert {
         alert.showAndWait();
     }
 
-    public static void showAlertBillAdded() {
+    public static void billAdded() {
         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
         alert.setTitle("Factura Confirmada");
         alert.setHeaderText(null);
@@ -25,7 +25,7 @@ public class ShowAlert {
         alert.showAndWait();
     }
 
-    public static void showAlertProductNotFound() {
+    public static void productNotFound() {
         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.WARNING);
         alert.setTitle("Producto no encontrado");
         alert.setHeaderText("Producto no encontrado");

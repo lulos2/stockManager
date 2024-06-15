@@ -16,8 +16,10 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 
 import java.text.NumberFormat;
@@ -70,6 +72,9 @@ public class BillingController {
     private TextField txtServicePrice;
 
     @FXML
+    private TextField txtDescTotal;
+
+    @FXML
     private TableColumn<Product, Integer> colProductCant;
 
     @FXML
@@ -88,6 +93,9 @@ public class BillingController {
     private TableColumn<Product, String> colProductUnitType;
 
     @FXML
+    private TableColumn<Product, Void> colProductActions;
+
+    @FXML
     private TableColumn<Service, String> colService;
 
     @FXML
@@ -95,6 +103,10 @@ public class BillingController {
 
     @FXML
     private TableColumn<Service, Double> colServicePrice;
+
+    @FXML
+    private TableColumn<Service, Void> colServiceActions;
+
 
     public BillingController() {
         this.productListToBill = DataStorage.getProductListToBill();
@@ -110,14 +122,17 @@ public class BillingController {
         if(txtProductCode.getText().isEmpty() || txtQuantity.getText().isEmpty()) return;
         if(productListToBill.existCode(Long.parseLong(txtProductCode.getText()))) return;
         Product product = this.productService.getProductByCode(Long.parseLong(txtProductCode.getText()));
-        if(product == null) return;
+        if(product == null){
+            ShowAlert.productNotFound();
+            return;
+        }
         if(product.getQuantity() < Integer.parseInt(txtQuantity.getText()) || Integer.parseInt(txtQuantity.getText()) <= 0) return;
         product.setQuantity(Integer.parseInt(txtQuantity.getText()));
         productListToBill.addProduct(product);
         tblProductsBill.getItems().add(product);
         updateProductTable();
         clearProductFields();
-        ShowAlert.showAlertProductAdded();
+        ShowAlert.productAdded();
     }
 
     private void clearProductFields() {
@@ -168,10 +183,11 @@ public class BillingController {
     void increaseQuantity(ActionEvent event) {
         if(txtProductCode.getText().isEmpty()) return;
         if(!txtQuantity.getText().isEmpty()) {
+            if(productService.getProductByCode(Long.parseLong(txtProductCode.getText()))==null) return;
             if(productService.getProductByCode(Long.parseLong(txtProductCode.getText())).getQuantity() <= Integer.parseInt(txtQuantity.getText())) return;
             txtQuantity.setText(String.valueOf(Integer.parseInt(txtQuantity.getText()) + 1));
         }else {
-            txtQuantity.setText("1");
+            txtQuantity.setText("0");
         }
     }
 
@@ -190,7 +206,7 @@ public class BillingController {
         Bill bill = createBill();
         if(bill != null){
             this.billingService.addBill(bill);
-            ShowAlert.showAlertBillAdded();
+            ShowAlert.billAdded();
             this.serviceListToBill.clear();
             this.productListToBill.getProducts().clear();
             updateProductTable();
@@ -202,7 +218,7 @@ public class BillingController {
     public void loadQuantity(){
         try {
             if(txtProductCode.getText().isEmpty()) {
-                ShowAlert.showAlertProductNotFound();
+                ShowAlert.productNotFound();
                 txtQuantity.setText("");
                 return;
             }
@@ -215,7 +231,7 @@ public class BillingController {
             }
         }
         catch (Exception e){
-            ShowAlert.showAlertProductNotFound();
+            ShowAlert.productNotFound();
             txtQuantity.setText("");
         }
     }
@@ -264,17 +280,43 @@ public class BillingController {
         };
     }
 
+    @FXML
+    void loadDescTotal(KeyEvent event) {
+        loadDescTotal();
+        calculateTotal();
+    }
+
+    void loadDescTotal(){
+        try {
+            if(txtDescTotal.getText().isEmpty()) {
+                txtDescTotal.setText("0");
+            }
+            Double.parseDouble(txtDescTotal.getText());
+            if(Double.parseDouble(txtDescTotal.getText()) < 0) {
+                txtDescTotal.setText("0");
+            }
+            if(Double.parseDouble(txtDescTotal.getText()) > 100) {
+                txtDescTotal.setText("100");
+            }
+        } catch (Exception e) {
+            txtDescTotal.setText("0");
+        }
+    }
+
     public void calculateTotal() {
+        loadDescTotal();
         double productsPrice = productListToBill.getTotalPrice();
         double servicePrice = serviceListToBill.stream().mapToDouble(Service::getPrice).sum();
         double subTotal = productsPrice + servicePrice;
-        double total = subTotal * 1.16;
+        double descent = subTotal * (Double.parseDouble(txtDescTotal.getText())/100);
+        double total = subTotal - descent;
 
         NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
 
         productsPriceCount.setText(currencyFormat.format(productsPrice));
         servicePriceCount.setText(currencyFormat.format(servicePrice));
         subTotalCount.setText(currencyFormat.format(subTotal));
+        desc.setText(currencyFormat.format(descent));
         totalcount.setText(currencyFormat.format(total));
     }
 
@@ -327,6 +369,63 @@ public class BillingController {
 
         productListToBill.addListener(c -> calculateTotal());
         serviceListToBill.addListener((ListChangeListener<Service>) c -> calculateTotal());
+
+        Callback<TableColumn<Product, Void>, TableCell<Product, Void>> cellFactory = new Callback<>() {
+            @Override
+            public TableCell<Product, Void> call(final TableColumn<Product, Void> param) {
+                return new TableCell<>() {
+                    private final Button btn = new Button("Eliminar");
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            Product product = getTableView().getItems().get(getIndex());
+                            productListToBill.removeProduct(product);
+                            updateProductTable();
+                        });
+                    }
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                            setAlignment(Pos.CENTER);
+                        }
+                    }
+                };
+            }
+        };
+        colProductActions.setCellFactory(cellFactory);
+
+        Callback<TableColumn<Service, Void>, TableCell<Service, Void>> cellFactoryService = new Callback<>() {
+            @Override
+            public TableCell<Service, Void> call(final TableColumn<Service, Void> param) {
+                return new TableCell<>() {
+
+                    private final Button btn = new Button("Eliminar");
+
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            Service service = getTableView().getItems().get(getIndex());
+                            serviceListToBill.remove(service);
+                            updateServiceTable();
+                        });
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                            setAlignment(Pos.CENTER);
+                        }
+                    }
+                };
+            }
+        };
+        colServiceActions.setCellFactory(cellFactoryService);
 
         calculateTotal();
     }
