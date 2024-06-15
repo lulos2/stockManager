@@ -25,7 +25,7 @@ public class ProductList {
         products.remove(product);
     }
 
-    public List<Product> getProducts() {
+    public ObservableList<Product> getProducts() {
         return this.products;
     }
 

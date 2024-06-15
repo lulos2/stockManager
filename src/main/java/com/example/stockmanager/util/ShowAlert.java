@@ -32,4 +32,12 @@ public class ShowAlert {
         alert.setContentText("El producto no se encuentra en la base de datos.");
         alert.showAndWait();
     }
+
+    public static void onlyNumbers() {
+        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.WARNING);
+        alert.setTitle("Solo números");
+        alert.setHeaderText("Solo números");
+        alert.setContentText("Solo se permiten números en este campo.");
+        alert.showAndWait();
+    }
 }

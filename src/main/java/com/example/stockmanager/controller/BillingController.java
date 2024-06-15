@@ -192,16 +192,6 @@ public class BillingController {
     }
 
     @FXML
-    void deleteItem(ActionEvent event) {
-        Product product = tblProductsBill.getSelectionModel().getSelectedItem();
-        productListToBill.removeProduct(product);
-        updateProductTable();
-        Service service = tblServiceList.getSelectionModel().getSelectedItem();
-        serviceListToBill.remove(service);
-        updateServiceTable();
-    }
-
-    @FXML
     void saveBill(ActionEvent event) {
         Bill bill = createBill();
         if(bill != null){
@@ -320,34 +310,77 @@ public class BillingController {
         totalcount.setText(currencyFormat.format(total));
     }
 
+    private void setupNumericValidation(TextField textField) {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                textField.setText(newValue.replaceAll("[^\\d]", ""));
+                ShowAlert.onlyNumbers();
+            }
+        });
+    }
+
+    private <T> Callback<TableColumn<T, Void>, TableCell<T, Void>> createButtonCellFactory(ObservableList<T> list, TableView<?> tableView, Runnable updateMethod) {
+        return new Callback<>() {
+            @Override
+            public TableCell<T, Void> call(final TableColumn<T, Void> param) {
+                return new TableCell<>() {
+                    private final Button btn = new Button("Eliminar");
+                    {
+                        btn.setOnAction((ActionEvent event) -> {
+                            T item = getTableView().getItems().get(getIndex());
+                            list.remove(item);
+                            updateMethod.run();
+                            tableView.refresh();
+                        });
+                    }
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(btn);
+                            setAlignment(Pos.CENTER);
+                        }
+                    }
+                };
+            }
+        };
+    }
+
+    private void setPriceProductCellFactory(TableColumn<Product, Double> column) {
+        column.setCellFactory(col -> new TableCell<>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+                    setText(currencyFormat.format(item));
+                }
+            }
+        });
+    }
+    private void setPriceServiceCellFactory(TableColumn<Service, Double> column) {
+        column.setCellFactory(col -> new TableCell<>() {
+            @Override
+            protected void updateItem(Double item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setText(null);
+                } else {
+                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+                    setText(currencyFormat.format(item));
+                }
+            }
+        });
+    }
+
     @FXML
     void initialize(){
-        colProductUnitPrice.setCellFactory(column -> new TableCell<>() {
-            @Override
-            protected void updateItem(Double item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (item == null || empty) {
-                    setText(null);
-                } else {
-                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
-                    setText(currencyFormat.format(item));
-                }
-            }
-        });
-        colProductTotalPrice.setCellFactory(column -> new TableCell<>() {
-            @Override
-            protected void updateItem(Double item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (item == null || empty) {
-                    setText(null);
-                } else {
-                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
-                    setText(currencyFormat.format(item));
-                }
-            }
-        });
         colProductCant.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colProductCode.setCellValueFactory(new PropertyValueFactory<>("code"));
         colProductTypeAndBrand.setCellValueFactory(new PropertyValueFactory<>("type"));
@@ -358,6 +391,10 @@ public class BillingController {
         colService.setCellValueFactory(new PropertyValueFactory<>("name"));
         colServiceDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         colServicePrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        setPriceProductCellFactory(colProductUnitPrice);
+        setPriceProductCellFactory(colProductTotalPrice);
+        setPriceServiceCellFactory(colServicePrice);
 
         tblProductsBill.getItems().clear();
         tblProductsBill.getItems().addAll(this.productListToBill.getProducts());
@@ -370,62 +407,12 @@ public class BillingController {
         productListToBill.addListener(c -> calculateTotal());
         serviceListToBill.addListener((ListChangeListener<Service>) c -> calculateTotal());
 
-        Callback<TableColumn<Product, Void>, TableCell<Product, Void>> cellFactory = new Callback<>() {
-            @Override
-            public TableCell<Product, Void> call(final TableColumn<Product, Void> param) {
-                return new TableCell<>() {
-                    private final Button btn = new Button("Eliminar");
-                    {
-                        btn.setOnAction((ActionEvent event) -> {
-                            Product product = getTableView().getItems().get(getIndex());
-                            productListToBill.removeProduct(product);
-                            updateProductTable();
-                        });
-                    }
-                    @Override
-                    public void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(btn);
-                            setAlignment(Pos.CENTER);
-                        }
-                    }
-                };
-            }
-        };
-        colProductActions.setCellFactory(cellFactory);
+        colProductActions.setCellFactory(createButtonCellFactory(productListToBill.getProducts(), tblProductsBill, this::updateProductTable));
+        colServiceActions.setCellFactory(createButtonCellFactory(serviceListToBill, tblServiceList, this::updateServiceTable));
 
-        Callback<TableColumn<Service, Void>, TableCell<Service, Void>> cellFactoryService = new Callback<>() {
-            @Override
-            public TableCell<Service, Void> call(final TableColumn<Service, Void> param) {
-                return new TableCell<>() {
-
-                    private final Button btn = new Button("Eliminar");
-
-                    {
-                        btn.setOnAction((ActionEvent event) -> {
-                            Service service = getTableView().getItems().get(getIndex());
-                            serviceListToBill.remove(service);
-                            updateServiceTable();
-                        });
-                    }
-
-                    @Override
-                    public void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            setGraphic(btn);
-                            setAlignment(Pos.CENTER);
-                        }
-                    }
-                };
-            }
-        };
-        colServiceActions.setCellFactory(cellFactoryService);
+        setupNumericValidation(txtServicePrice);
+        setupNumericValidation(txtQuantity);
+        setupNumericValidation(txtProductCode);
 
         calculateTotal();
     }
