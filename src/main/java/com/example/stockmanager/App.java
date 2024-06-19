@@ -21,7 +21,7 @@ public class App extends Application {
 
         StageManager.setPrimaryStage(stage);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(Paths.PRODUCT_FXML));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(Paths.MAIN_FXML));
         AnchorPane pane = loader.load();
 
         Scene scene = new Scene(pane);

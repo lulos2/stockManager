@@ -1,22 +1,32 @@
 package com.example.stockmanager.controller;
 
+import com.example.stockmanager.util.Paths;
+import com.example.stockmanager.util.StageManager;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 
 public class MainController {
 
-    @FXML
-    private Button manageProductsButton;
-    @FXML
-    private Button generateReportsButton;
+
+
 
     @FXML
-    private void handleManageProducts() {
-        // Load and display the product management view
+    void goToBilling(ActionEvent event) {
+        StageManager.changeScene(Paths.BILLING_FXML);
     }
 
     @FXML
-    private void handleGenerateReports() {
-        // Load and display the report generation view
+    void goToProduct(ActionEvent event) {
+        StageManager.changeScene(Paths.PRODUCT_FXML);
+    }
+
+    @FXML
+    void goToReports(ActionEvent event) {
+
+    }
+
+    @FXML
+    void goToSelled(ActionEvent event) {
+
     }
 }

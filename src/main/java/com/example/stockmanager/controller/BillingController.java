@@ -238,8 +238,8 @@ public class BillingController {
     }
 
     @FXML
-    void goToProduct(ActionEvent event) {
-        StageManager.changeScene(Paths.PRODUCT_FXML);
+    void goToMain(ActionEvent event) {
+        StageManager.changeScene(Paths.MAIN_FXML);
     }
 
     private Callback<TableColumn.CellDataFeatures<Product, Double>, ObservableValue<Double>> importCalculator() {

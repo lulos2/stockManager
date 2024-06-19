@@ -48,6 +48,6 @@
       <CheckBox fx:id="chkLts" layoutX="227.0" layoutY="283.0" mnemonicParsing="false" onMouseClicked="#onlyOneSelected" text="Lts" />
       <CheckBox fx:id="chkUnity" layoutX="188.0" layoutY="283.0" mnemonicParsing="false" onMouseClicked="#onlyOneSelected" text="U" />
       <Label layoutX="174.0" layoutY="283.0" text="x" />
-      <Button layoutX="990.0" layoutY="600.0" mnemonicParsing="false" onAction="#goToBilling" prefHeight="155.0" prefWidth="255.0" text="ir a facturacion" />
+      <Button layoutX="990.0" layoutY="600.0" mnemonicParsing="false" onAction="#goToMain" prefHeight="155.0" prefWidth="255.0" text="menu principal" />
    </children>
 </AnchorPane>

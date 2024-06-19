@@ -81,7 +81,7 @@ public class ProductController {
         }
     }
 
-    public Product createProduct(){
+    Product createProduct(){
         if(txtType.getText().isEmpty() || txtBrand.getText().isEmpty() || txtCode.getText().isEmpty() || txtCost.getText().isEmpty() || txtPrice.getText().isEmpty() || txtQuantity.getText().isEmpty()) return null;
         try {
             if (Integer.parseInt(txtQuantity.getText()) < 0) return null;
@@ -221,8 +221,9 @@ public class ProductController {
     }
 
     @FXML
-    void goToBilling(ActionEvent event) {
-        StageManager.changeScene(Paths.BILLING_FXML);
+    void goToMain(ActionEvent event) {
+        System.out.println("Go to main");
+        StageManager.changeScene(Paths.MAIN_FXML);
     }
 
     void copiCode(){
