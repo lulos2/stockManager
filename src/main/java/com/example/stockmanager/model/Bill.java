@@ -3,6 +3,7 @@ package com.example.stockmanager.model;
 import javafx.collections.ObservableList;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 public class Bill {
@@ -12,17 +13,17 @@ public class Bill {
     private ObservableList<Service> services;
     private String client;
     private LocalDateTime date;
-    private double total;
+    private Double total;
 
     public Bill() {
     }
 
-    public Bill(Long id, ProductList products, ObservableList<Service> services, String client, Date date, double total) {
+    public Bill(Long id, ProductList products, ObservableList<Service> services, String client, Timestamp date, Double total) {
         this.id = id;
         this.products = products;
         this.services = services;
         this.client = client;
-        this.date = LocalDateTime.of(date.toLocalDate(), LocalDateTime.now().toLocalTime());
+        this.date = date.toLocalDateTime();
         this.total = total;
     }
 
@@ -63,12 +64,12 @@ public class Bill {
         this.client = client;
     }
 
-    public Date getDate() {
-        return Date.valueOf(date.toLocalDate());
+    public Timestamp getDate() {
+        return Timestamp.valueOf(date);
     }
 
-    public void setDate(LocalDateTime date) {
-        this.date = date;
+    public void setDate(Timestamp date) {
+        this.date = date.toLocalDateTime();
     }
 
     public double getTotal() {

@@ -166,6 +166,13 @@ public class BillingController {
         txtServicePrice.clear();
     }
 
+    private void clearBillFields() {
+        txtBillName.clear();
+        txtDescTotal.clear();
+        clearProductFields();
+        clearServiceFields();
+    }
+
     private void updateServiceTable() {
         tblServiceList.getItems().clear();
         tblServiceList.getItems().addAll(serviceListToBill);
@@ -201,6 +208,7 @@ public class BillingController {
             this.productListToBill.getProducts().clear();
             updateProductTable();
             updateServiceTable();
+            clearBillFields();
         }
     }
 
