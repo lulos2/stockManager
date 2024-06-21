@@ -6,7 +6,7 @@
 <AnchorPane prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.stockmanager.controller.MainController">
   <children>
      <Button layoutX="131.0" layoutY="31.0" mnemonicParsing="false" onAction="#goToProduct" prefHeight="47.0" prefWidth="129.0" text="productos" />
-     <Button layoutX="747.0" layoutY="31.0" mnemonicParsing="false" onAction="#goToSelled" prefHeight="47.0" prefWidth="128.0" text="facturas" />
+     <Button layoutX="747.0" layoutY="31.0" mnemonicParsing="false" onAction="#goToSales" prefHeight="47.0" prefWidth="128.0" text="facturas" />
      <Button layoutX="445.0" layoutY="31.0" mnemonicParsing="false" onAction="#goToBilling" prefHeight="47.0" prefWidth="132.0" text="realizar venta" />
      <Button layoutX="1038.0" layoutY="31.0" mnemonicParsing="false" onAction="#goToReports" prefHeight="47.0" prefWidth="128.0" text="reportes" />
   </children>

@@ -5,10 +5,8 @@ import com.example.stockmanager.model.Product;
 import com.example.stockmanager.model.Service;
 import com.example.stockmanager.util.DatabaseUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BillDAOImpl implements BillDAO {
@@ -25,7 +23,7 @@ public class BillDAOImpl implements BillDAO {
             long billId;
             try (PreparedStatement pstmtBill = conn.prepareStatement(sqlBill, PreparedStatement.RETURN_GENERATED_KEYS)) {
                 pstmtBill.setString(1, bill.getClient());
-                pstmtBill.setDate(2, bill.getDate());
+                pstmtBill.setLong(2, bill.getDate().getTime());
                 pstmtBill.setDouble(3, bill.getTotal());
                 pstmtBill.executeUpdate();
 
@@ -73,7 +71,23 @@ public class BillDAOImpl implements BillDAO {
 
     @Override
     public List<Bill> getAllBills() {
-        return null;
+        List<Bill> bills = new ArrayList<>();
+        String sql = "SELECT * FROM bill";
+        try (Connection conn = DatabaseUtil.getConnection()) {
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        long timestamp = rs.getLong("date");
+                        Timestamp date = new Timestamp(timestamp);
+                        Bill bill = new Bill(rs.getLong("id"), null, null, rs.getString("client"), date, rs.getDouble("total"));
+                        bills.add(bill);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return bills;
     }
 
     @Override

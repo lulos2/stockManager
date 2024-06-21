@@ -7,9 +7,6 @@ import javafx.fxml.FXML;
 
 public class MainController {
 
-
-
-
     @FXML
     void goToBilling(ActionEvent event) {
         StageManager.changeScene(Paths.BILLING_FXML);
@@ -26,7 +23,7 @@ public class MainController {
     }
 
     @FXML
-    void goToSelled(ActionEvent event) {
-
+    public void goToSales(ActionEvent actionEvent) {
+        StageManager.changeScene(Paths.SALES_FXML);
     }
 }

@@ -21,8 +21,8 @@ public class StageManager {
             FXMLLoader loader = new FXMLLoader(Objects.requireNonNull(StageManager.class.getResource(fxml)));
             primaryStage.getScene().setRoot(loader.load());
         }
-        catch (Exception ignored){
-            System.out.println("Error al cargar la escena"+ ignored.getMessage());
+        catch (Exception e){
+            System.out.println("Error al cargar la escena"+ e.getMessage());
         }
     }
 }
