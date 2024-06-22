@@ -22,7 +22,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 
+import java.sql.SQLException;
 import java.text.NumberFormat;
+
+import static com.example.stockmanager.controller.SaleViewController.getCellDataFeaturesObservableValueCallback;
 
 public class BillingController {
 
@@ -114,11 +117,11 @@ public class BillingController {
     }
 
     @FXML
-    void addProductToBillList(ActionEvent event) {
+    void addProductToBillList(ActionEvent event) throws SQLException {
         addProductToBillList();
     }
 
-    void addProductToBillList() {
+    void addProductToBillList() throws SQLException {
         if(txtProductCode.getText().isEmpty() || txtQuantity.getText().isEmpty()) return;
         if(productListToBill.existCode(Long.parseLong(txtProductCode.getText()))) return;
         Product product = this.productService.getProductByCode(Long.parseLong(txtProductCode.getText()));
@@ -187,7 +190,7 @@ public class BillingController {
     }
 
     @FXML
-    void increaseQuantity(ActionEvent event) {
+    void increaseQuantity(ActionEvent event) throws SQLException {
         if(txtProductCode.getText().isEmpty()) return;
         if(!txtQuantity.getText().isEmpty()) {
             if(productService.getProductByCode(Long.parseLong(txtProductCode.getText()))==null) return;
@@ -251,31 +254,7 @@ public class BillingController {
     }
 
     private Callback<TableColumn.CellDataFeatures<Product, Double>, ObservableValue<Double>> importCalculator() {
-        return param -> {
-            Product product = param.getValue();
-            return new ObservableValue<>() {
-                @Override
-                public void addListener(ChangeListener<? super Double> listener) {
-                }
-
-                @Override
-                public void removeListener(ChangeListener<? super Double> listener) {
-                }
-
-                @Override
-                public Double getValue() {
-                    return product.getPrice() * product.getQuantity();
-                }
-
-                @Override
-                public void addListener(InvalidationListener listener) {
-                }
-
-                @Override
-                public void removeListener(InvalidationListener listener) {
-                }
-            };
-        };
+        return getCellDataFeaturesObservableValueCallback();
     }
 
     @FXML

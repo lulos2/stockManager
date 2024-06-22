@@ -8,7 +8,7 @@ public interface ProductDAO {
     void addProduct(Product product);
     void updateProduct(Product product);
     void deleteProduct(Product product);
-    Product getProduct(Long code);
+    Product getProduct(Long code, Connection connection) throws SQLException;
     List<Product> getAllProducts();
     List<Product> searchProduct(String text);
     void discountStock(Connection connection, Long productCode, int quantityLess) throws SQLException;

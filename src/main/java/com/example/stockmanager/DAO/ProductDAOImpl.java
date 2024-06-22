@@ -60,20 +60,27 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public Product getProduct(Long code) {
+    public Product getProduct(Long code, Connection connection) {
         String sql = "SELECT * FROM product WHERE code = ?";
-        try (Connection conn = DatabaseUtil.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setLong(1, code);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    return new Product(rs.getString("type"), rs.getString("brand"),
-                            rs.getLong("code"), rs.getDouble("cost"), rs.getDouble("price"), rs.getInt("quantity"),rs.getString("description"), rs.getString("unitType"));
+        try {
+            if (connection == null) {
+                connection = DatabaseUtil.getConnection();
+            }
+            try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+                pstmt.setLong(1, code);
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
+                        return new Product(rs.getString("type"), rs.getString("brand"),
+                                rs.getLong("code"), rs.getDouble("cost"), rs.getDouble("price"), rs.getInt("quantity"),rs.getString("description"), rs.getString("unitType"));
+                    }
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 

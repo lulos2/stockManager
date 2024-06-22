@@ -4,14 +4,15 @@ import com.example.stockmanager.DAO.ProductDAO;
 import com.example.stockmanager.DAO.ProductDAOImpl;
 import com.example.stockmanager.model.Product;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class ProductService {
 
     ProductDAO productDAO = new ProductDAOImpl();
 
-    public Product getProductByCode(Long l) {
-        return this.productDAO.getProduct(l);
+    public Product getProductByCode(Long l) throws SQLException {
+        return this.productDAO.getProduct(l, null);
     }
 
     public void addProduct(Product product) {
