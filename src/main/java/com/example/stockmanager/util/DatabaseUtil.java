@@ -85,7 +85,8 @@ public class DatabaseUtil {
                     "name TEXT NOT NULL," +
                     "price REAL NOT NULL," +
                     "duration INTEGER," +
-                    "description TEXT" +
+                    "description TEXT," +
+                    "bill_id INTEGER REFERENCES Bill(id)" +
                     ");";
             stmt.executeUpdate(sql);
 

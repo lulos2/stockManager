@@ -5,6 +5,7 @@ import javafx.collections.ObservableList;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class Bill {
 
@@ -86,5 +87,9 @@ public class Bill {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public void addServices(List<Service> services) {
+        this.services.addAll(services);
     }
 }

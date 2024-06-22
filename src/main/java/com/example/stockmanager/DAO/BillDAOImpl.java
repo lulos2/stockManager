@@ -19,7 +19,6 @@ public class BillDAOImpl implements BillDAO {
     public void addBill(Bill bill) {
         String sqlBill = "INSERT INTO bill (client, date, total) VALUES (?, ?, ?)";
         String sqlBillProduct = "INSERT INTO bill_product (bill_id, product_code, quantity) VALUES (?, ?, ?)";
-        String sqlBillService = "INSERT INTO bill_service (bill_id, service_id) VALUES (?, ?)";
 
         try (Connection conn = DatabaseUtil.getConnection()) {
             conn.setAutoCommit(false);
@@ -51,13 +50,13 @@ public class BillDAOImpl implements BillDAO {
                 pstmtBillProduct.executeBatch();
             }
 
-            try (PreparedStatement pstmtBillService = conn.prepareStatement(sqlBillService)) {
+            try  {
                 for (Service service : bill.getServices()) {
-                    pstmtBillService.setLong(1, billId);
-                    pstmtBillService.setInt(2, service.getId());
-                    pstmtBillService.addBatch();
+                    service.setBillId(billId);
+                    serviceDAO.addService(service, conn);
                 }
-                pstmtBillService.executeBatch();
+            } catch (Exception e) {
+                e.fillInStackTrace();
             }
 
             conn.commit();
@@ -98,7 +97,6 @@ public class BillDAOImpl implements BillDAO {
         Bill bill = null;
         String sqlBill = "SELECT * FROM bill WHERE id = ?";
         String sqlBillProduct = "SELECT * FROM bill_product WHERE bill_id = ?";
-        String sqlBillService = "SELECT * FROM bill_service WHERE bill_id = ?";
 
         try (Connection conn = DatabaseUtil.getConnection()) {
             try (PreparedStatement pstmtBill = conn.prepareStatement(sqlBill)) {
@@ -123,16 +121,7 @@ public class BillDAOImpl implements BillDAO {
                         }
                     }
                 }
-
-                try (PreparedStatement pstmtBillService = conn.prepareStatement(sqlBillService)) {
-                    pstmtBillService.setLong(1, id);
-                    try (ResultSet rs = pstmtBillService.executeQuery()) {
-                        while (rs.next()) {
-                            Service service = serviceDAO.getServiceById(rs.getLong("service_id"), conn);
-                            bill.addService(service);
-                        }
-                    }
-                }
+                bill.addServices(serviceDAO.getServicesByBill(id, conn));
             }
         } catch (SQLException e) {
             e.fillInStackTrace();

@@ -8,15 +8,18 @@ public class Service {
     private int duration;
     private String description;
 
+    private Long billId;
+
     public Service() {
     }
 
-
-    public Service(String name, double price, int duration, String description) {
+    public Service(int id, String name, double price, int duration, String description, Long billId) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.duration = duration;
         this.description = description;
+        this.billId = billId;
     }
 
     public Service(String name, String description, double price) {
@@ -27,6 +30,14 @@ public class Service {
 
     public int getId() {
         return id;
+    }
+
+    public Long getBillId() {
+        return billId;
+    }
+
+    public void setBillId(Long billId) {
+        this.billId = billId;
     }
 
     public String getName() {
