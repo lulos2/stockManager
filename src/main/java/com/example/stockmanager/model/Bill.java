@@ -52,6 +52,10 @@ public class Bill {
         return services;
     }
 
+    public void addService(Service service) {
+        this.services.add(service);
+    }
+
     public void setServices(ObservableList<Service> services) {
         this.services = services;
     }

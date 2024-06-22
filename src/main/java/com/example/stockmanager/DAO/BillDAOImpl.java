@@ -2,8 +2,10 @@ package com.example.stockmanager.DAO;
 
 import com.example.stockmanager.model.Bill;
 import com.example.stockmanager.model.Product;
+import com.example.stockmanager.model.ProductList;
 import com.example.stockmanager.model.Service;
 import com.example.stockmanager.util.DatabaseUtil;
+import javafx.collections.FXCollections;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,6 +14,7 @@ import java.util.List;
 public class BillDAOImpl implements BillDAO {
 
     private final ProductDAO productDAO = new ProductDAOImpl();
+    private final ServiceDAO serviceDAO = new ServiceDAOImpl();
 
     public void addBill(Bill bill) {
         String sqlBill = "INSERT INTO bill (client, date, total) VALUES (?, ?, ?)";
@@ -59,12 +62,12 @@ public class BillDAOImpl implements BillDAO {
 
             conn.commit();
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.fillInStackTrace();
             try (Connection conn = DatabaseUtil.getConnection()) {
                 // Realizar rollback en caso de error
                 conn.rollback();
             } catch (SQLException rollbackEx) {
-                rollbackEx.printStackTrace();
+                rollbackEx.fillInStackTrace();
             }
         }
     }
@@ -85,9 +88,56 @@ public class BillDAOImpl implements BillDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.fillInStackTrace();
         }
         return bills;
+    }
+
+    @Override
+    public Bill getBillById(Long id) {
+        Bill bill = null;
+        String sqlBill = "SELECT * FROM bill WHERE id = ?";
+        String sqlBillProduct = "SELECT * FROM bill_product WHERE bill_id = ?";
+        String sqlBillService = "SELECT * FROM bill_service WHERE bill_id = ?";
+
+        try (Connection conn = DatabaseUtil.getConnection()) {
+            try (PreparedStatement pstmtBill = conn.prepareStatement(sqlBill)) {
+                pstmtBill.setLong(1, id);
+                try (ResultSet rs = pstmtBill.executeQuery()) {
+                    if (rs.next()) {
+                        long timestamp = rs.getLong("date");
+                        Timestamp date = new Timestamp(timestamp);
+                        bill = new Bill(rs.getLong("id"), new ProductList(), FXCollections.observableArrayList(), rs.getString("client"), date, rs.getDouble("total"));
+                    }
+                }
+            }
+
+            if (bill != null) {
+                try (PreparedStatement pstmtBillProduct = conn.prepareStatement(sqlBillProduct)) {
+                    pstmtBillProduct.setLong(1, id);
+                    try (ResultSet rs = pstmtBillProduct.executeQuery()) {
+                        while (rs.next()) {
+                            Product product = productDAO.getProduct(rs.getLong("product_code"), conn);
+                            product.setQuantity(rs.getInt("quantity"));
+                            bill.getProducts().addProduct(product);
+                        }
+                    }
+                }
+
+                try (PreparedStatement pstmtBillService = conn.prepareStatement(sqlBillService)) {
+                    pstmtBillService.setLong(1, id);
+                    try (ResultSet rs = pstmtBillService.executeQuery()) {
+                        while (rs.next()) {
+                            Service service = serviceDAO.getServiceById(rs.getLong("service_id"), conn);
+                            bill.addService(service);
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.fillInStackTrace();
+        }
+        return bill;
     }
 
     @Override

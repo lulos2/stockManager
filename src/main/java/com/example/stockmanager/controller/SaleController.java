@@ -3,14 +3,13 @@ package com.example.stockmanager.controller;
 import com.example.stockmanager.model.Bill;
 import com.example.stockmanager.model.Product;
 import com.example.stockmanager.service.BillingService;
+import com.example.stockmanager.util.DataStorage;
 import com.example.stockmanager.util.Paths;
 import com.example.stockmanager.util.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.time.LocalDateTime;
@@ -19,7 +18,7 @@ import java.util.Date;
 
 public class SaleController {
 
-    private ArrayList<Bill> billList = new ArrayList<>();
+    private final ArrayList<Bill> billList = new ArrayList<>();
     private final BillingService billingService = new BillingService();
 
     @FXML
@@ -47,7 +46,6 @@ public class SaleController {
     private DatePicker startDatePicker;
 
     public SaleController() {
-
     }
 
     public void updateTable() {
@@ -92,9 +90,11 @@ public class SaleController {
         StageManager.changeScene(Paths.MAIN_FXML);
     }
 
-    /*private void openBillDetail(Bill bill) {
+    private void openBillDetail(Bill bill) {
+        bill = billingService.getBillById(bill.getId());
+        DataStorage.setBill(bill);
         StageManager.changeScene(Paths.SALES_DETAIL_FXML);
-    }*/
+    }
 
     @FXML
     void initialize() {
@@ -102,7 +102,25 @@ public class SaleController {
         colSaleClient.setCellValueFactory(new PropertyValueFactory<>("client"));
         colSaleDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colSaleTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
-        //colSaleDetail.setCellFactory(createButtonCellFactory(billList.getProducts(), tblProductsBill, this::updateProductTable));
+        colSaleDetail.setCellFactory(param -> new TableCell<>() {
+            private final Button btn = new Button("Ver Detalle");
+            {
+                btn.setOnAction(event -> {
+                    Bill bill = getTableView().getItems().get(getIndex());
+                    openBillDetail(bill);
+                });
+            }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(btn);
+                }
+            }
+        });
+
         loadProductData();
     }
 }

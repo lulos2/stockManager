@@ -1,18 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.stockmanager.controller.SaleController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.stockmanager.controller.SaleViewController">
+    <Button layoutX="1208.0" layoutY="25.0" mnemonicParsing="false" onAction="#goToSales" text="volver" />
+    <Label layoutX="927.0" layoutY="31.0" text="Factura No:">
+      <font>
+         <Font size="14.0" />
+      </font></Label>
+    <Label fx:id="billIdLabel" layoutX="100.0" layoutY="20.0" />
 
-    <Label fx:id="saleIdLabel" layoutX="20.0" layoutY="20.0" />
-    <Label fx:id="saleDateLabel" layoutX="20.0" layoutY="60.0" />
-    <Label fx:id="saleTotalLabel" layoutX="20.0" layoutY="100.0" />
+    <Label layoutX="927.0" layoutY="71.0" text="Fecha:">
+      <font>
+         <Font size="14.0" />
+      </font></Label>
+    <Label fx:id="billDateLabel" layoutX="100.0" layoutY="60.0" />
 
+    <Label layoutX="927.0" layoutY="111.0" text="Cliente:">
+      <font>
+         <Font size="14.0" />
+      </font></Label>
+    <Label fx:id="billClientLabel" layoutX="100.0" layoutY="100.0" />
+
+    <Label layoutX="927.0" layoutY="151.0" text="Total:">
+      <font>
+         <Font size="14.0" />
+      </font></Label>
+    <Label fx:id="billTotalLabel" layoutX="100.0" layoutY="140.0" />
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00d4ff0d" height="366.0" layoutX="20.0" layoutY="22.0" stroke="BLACK" strokeType="INSIDE" width="854.0" />
+
+    <Label layoutX="70.0" layoutY="41.0" text="Productos :" />
+    <TableView fx:id="billProductsTable" layoutX="74.0" layoutY="67.0" prefHeight="284.0" prefWidth="760.0">
+        <columns>
+            <TableColumn fx:id="colProductCode" prefWidth="100.0" text="Codigo" />
+            <TableColumn fx:id="colProductTypeBrand" prefWidth="191.99998474121094" text="Tipo y marca" />
+            <TableColumn fx:id="colProductQuantity" prefWidth="147.20001220703125" text="Cantidad" />
+            <TableColumn fx:id="colProductPrice" prefWidth="156.79998779296875" text="Precio Unitario" />
+            <TableColumn fx:id="colProductTotal" prefWidth="162.39996337890625" text="Total" />
+        </columns>
+    </TableView>
+   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00d4ff0d" height="342.0" layoutX="20.0" layoutY="435.0" stroke="BLACK" strokeType="INSIDE" width="854.0" />
+   <Label layoutX="70.0" layoutY="452.0" text="Servicios :" />
+   <TableView fx:id="billServicesTable" layoutX="74.0" layoutY="485.0" prefHeight="254.0" prefWidth="760.0">
+      <columns>
+         <TableColumn fx:id="colServiceId" prefWidth="100.0" text="ID" />
+         <TableColumn fx:id="colServiceName" prefWidth="200.0" text="Nombre" />
+         <TableColumn fx:id="colServiceDescription" prefWidth="232.0" text="Descripcion" />
+         <TableColumn fx:id="colServiceTotal" prefWidth="228.0" text="Total" />
+      </columns>
+   </TableView>
+   <Label fx:id="labelBillNumber" layoutX="1007.0" layoutY="31.0" text="0">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label fx:id="labelBillDate" layoutX="1007.0" layoutY="71.0" text="0">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label fx:id="labelBillClientName" layoutX="1011.0" layoutY="111.0" text="0">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
+   <Label fx:id="labelBillTotal" layoutX="1007.0" layoutY="151.0" text="0">
+      <font>
+         <Font size="14.0" />
+      </font>
+   </Label>
 </AnchorPane>

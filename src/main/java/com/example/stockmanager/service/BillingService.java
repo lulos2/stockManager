@@ -14,4 +14,8 @@ public class BillingService {
     public ArrayList<Bill> getAllBills() {
         return new ArrayList<Bill>(this.billDAO.getAllBills());
     }
+
+    public Bill getBillById(Long id) {
+        return this.billDAO.getBillById(id);
+    }
 }
