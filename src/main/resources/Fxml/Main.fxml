@@ -3,11 +3,11 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.stockmanager.controller.MainController">
+<AnchorPane prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.MainController">
   <children>
-     <Button layoutX="131.0" layoutY="31.0" mnemonicParsing="false" onAction="#goToProduct" prefHeight="47.0" prefWidth="129.0" text="productos" />
-     <Button layoutX="747.0" layoutY="31.0" mnemonicParsing="false" onAction="#goToSales" prefHeight="47.0" prefWidth="128.0" text="facturas" />
-     <Button layoutX="445.0" layoutY="31.0" mnemonicParsing="false" onAction="#goToBilling" prefHeight="47.0" prefWidth="132.0" text="realizar venta" />
-     <Button layoutX="1038.0" layoutY="31.0" mnemonicParsing="false" onAction="#goToReports" prefHeight="47.0" prefWidth="128.0" text="reportes" />
+     <Button layoutX="63.0" layoutY="31.0" mnemonicParsing="false" onAction="#goToProduct" prefHeight="711.0" prefWidth="318.0" text="productos" />
+     <Button layoutX="788.0" layoutY="31.0" mnemonicParsing="false" onAction="#goToSales" prefHeight="705.0" prefWidth="287.0" text="facturas" />
+     <Button layoutX="445.0" layoutY="31.0" mnemonicParsing="false" onAction="#goToBilling" prefHeight="711.0" prefWidth="298.0" text="realizar venta" />
+     <Button layoutX="1108.0" layoutY="31.0" mnemonicParsing="false" onAction="#goToReports" prefHeight="706.0" prefWidth="158.0" text="reportes" />
   </children>
 </AnchorPane>
