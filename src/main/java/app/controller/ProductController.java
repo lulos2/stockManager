@@ -3,9 +3,7 @@ import app.model.Product;
 import app.model.ProductList;
 import app.service.ProductService;
 import app.util.Enums;
-import app.util.Paths;
 import app.util.ShowAlert;
-import app.util.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -14,13 +12,15 @@ import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.MouseEvent;
 
-import java.text.NumberFormat;
-
 
 public class ProductController extends BaseController{
 
     private final ProductService productService = new ProductService();
     private final ProductList productList;
+    private boolean isUpdating = false;
+
+    @FXML
+    public TextField txtCostPrice;
     @FXML
     private TableView <Product> tblProduct;
     @FXML
@@ -243,33 +243,9 @@ public class ProductController extends BaseController{
 
     @FXML
     void initialize() {
-        colPrice.setCellFactory(column -> new TableCell<>() {
-            @Override
-            protected void updateItem(Double item, boolean empty) {
-                super.updateItem(item, empty);
 
-                if (item == null || empty) {
-                    setText(null);
-                } else {
-                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
-                    setText(currencyFormat.format(item));
-                }
-            }
-        });
-
-        colCost.setCellFactory(column -> new TableCell<>() {
-            @Override
-            protected void updateItem(Double item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (item == null || empty) {
-                    setText(null);
-                } else {
-                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
-                    setText(currencyFormat.format(item));
-                }
-            }
-        });
+        currencyFormaterCellFactory(colPrice);
+        currencyFormaterCellFactory(colCost);
 
         colType.setCellValueFactory(new PropertyValueFactory<>("type"));
         colBrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
@@ -283,7 +259,59 @@ public class ProductController extends BaseController{
         tblProduct.setOnMouseClicked(event -> {
             if(tblProduct.getSelectionModel().getSelectedItem() != null) updateFields();
         });
+
+        txtCost.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!isUpdating) {
+                calculatePrice();
+            }
+        });
+        txtCostPrice.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!isUpdating) {
+                calculatePrice();
+            }
+        });
+        txtPrice.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!isUpdating) {
+                calculateCostPrice();
+            }
+        });
+
         loadProductData();
         copiCode();
+    }
+
+    void calculatePrice() {
+        if(txtCost.getText().isEmpty()){
+            txtPrice.clear();
+            txtCostPrice.clear();
+            return;
+        }
+        if(txtCostPrice.getText().isEmpty())return;
+        try {
+            isUpdating = true;
+            double cost = Double.parseDouble(txtCost.getText());
+            double costPrice = Double.parseDouble(txtCostPrice.getText());
+            Integer price = (int) (cost * ((costPrice/100)+1));
+            txtPrice.setText(String.valueOf(price));
+        } catch (NumberFormatException e) {
+            System.out.println("Error calculate price: " + e.getMessage());
+        } finally {
+            isUpdating = false;
+        }
+    }
+
+    void calculateCostPrice() {
+        if (txtPrice.getText().isEmpty() || txtCost.getText().isEmpty()) return;
+        try {
+            isUpdating = true;
+            double cost = Double.parseDouble(txtCost.getText());
+            double price = Double.parseDouble(txtPrice.getText());
+            Integer costPrice = (int) (((price - cost)/cost) * 100);
+            txtCostPrice.setText(String.valueOf(costPrice));
+        } catch (NumberFormatException e) {
+            System.out.println("Error calculate costPice: " + e.getMessage());
+        } finally {
+            isUpdating = false;
+        }
     }
 }
