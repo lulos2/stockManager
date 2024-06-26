@@ -1,13 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.SeparatorMenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.MainController">
-  <children>
-     <Button layoutX="63.0" layoutY="31.0" mnemonicParsing="false" onAction="#goToProduct" prefHeight="711.0" prefWidth="318.0" text="productos" />
-     <Button layoutX="788.0" layoutY="31.0" mnemonicParsing="false" onAction="#goToSales" prefHeight="705.0" prefWidth="287.0" text="facturas" />
-     <Button layoutX="445.0" layoutY="31.0" mnemonicParsing="false" onAction="#goToBilling" prefHeight="711.0" prefWidth="298.0" text="realizar venta" />
-     <Button layoutX="1108.0" layoutY="31.0" mnemonicParsing="false" onAction="#goToReports" prefHeight="706.0" prefWidth="158.0" text="reportes" />
-  </children>
-</AnchorPane>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.MainController">
+    <MenuBar VBox.vgrow="NEVER">
+        <Menu mnemonicParsing="false" text="Ir a ...">
+            <MenuItem mnemonicParsing="false" onAction="#goToProduct" text="Productos" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" onAction="#goToBilling" text="Vender" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" onAction="#goToMain" text="Menu principal" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" onAction="#goToSales" text="Ventas" />
+        </Menu>
+    </MenuBar>
+    <ScrollPane prefHeight="800.0" prefWidth="1280.0">
+        <AnchorPane prefHeight="767.0" prefWidth="1270.0">
+          <children>
+             <Button layoutX="63.0" layoutY="232.0" mnemonicParsing="false" onAction="#goToProduct" prefHeight="322.0" prefWidth="326.0" text="productos" />
+             <Button layoutX="840.0" layoutY="232.0" mnemonicParsing="false" onAction="#goToSales" prefHeight="321.0" prefWidth="347.0" text="facturas" />
+             <Button layoutX="447.0" layoutY="232.0" mnemonicParsing="false" onAction="#goToBilling" prefHeight="321.0" prefWidth="322.0" text="realizar venta" />
+          </children>
+        </AnchorPane>
+    </ScrollPane>
+</VBox>

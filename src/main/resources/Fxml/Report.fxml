@@ -6,13 +6,26 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="app.controller.ReportController"
-            prefHeight="400.0" prefWidth="600.0">
-    <VBox>
-        <TextArea fx:id="reportTextArea" />
-        <Button text="Generate Report" onAction="#handleGenerateReport"/>
-    </VBox>
-
-</AnchorPane>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="app.controller.ReportController">
+    <MenuBar VBox.vgrow="NEVER">
+        <Menu mnemonicParsing="false" text="Ir a ...">
+            <MenuItem mnemonicParsing="false" text="Productos" onAction="#goToProduct"/>
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Vender" onAction="#goToBilling"/>
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Menu principal" onAction="#goToMain"/>
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" text="Ventas" onAction="#goToSales"/>
+        </Menu>
+    </MenuBar>
+    <ScrollPane prefHeight="800.0" prefWidth="1280.0">
+        <AnchorPane>
+            <VBox>
+                <TextArea fx:id="reportTextArea" />
+                <Button text="Generate Report" onAction="#handleGenerateReport"/>
+            </VBox>
+        </AnchorPane>
+    </ScrollPane>
+</VBox>

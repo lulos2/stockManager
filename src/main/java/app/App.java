@@ -7,7 +7,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.Objects;
@@ -22,7 +22,7 @@ public class App extends Application {
         StageManager.setPrimaryStage(stage);
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource(Paths.MAIN_FXML));
-        AnchorPane pane = loader.load();
+        VBox pane = loader.load();
 
         Scene scene = new Scene(pane);
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource(Paths.STYLES_CSS)).toExternalForm());
