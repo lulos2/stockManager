@@ -6,9 +6,7 @@ import app.model.Service;
 import app.service.BillingService;
 import app.service.ProductService;
 import app.util.DataStorage;
-import app.util.Paths;
 import app.util.ShowAlert;
-import app.util.StageManager;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -326,37 +324,6 @@ public class BillingController extends BaseController {
         };
     }
 
-    private void setPriceProductCellFactory(TableColumn<Product, Double> column) {
-        column.setCellFactory(col -> new TableCell<>() {
-            @Override
-            protected void updateItem(Double item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (item == null || empty) {
-                    setText(null);
-                } else {
-                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
-                    setText(currencyFormat.format(item));
-                }
-            }
-        });
-    }
-    private void setPriceServiceCellFactory(TableColumn<Service, Double> column) {
-        column.setCellFactory(col -> new TableCell<>() {
-            @Override
-            protected void updateItem(Double item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (item == null || empty) {
-                    setText(null);
-                } else {
-                    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
-                    setText(currencyFormat.format(item));
-                }
-            }
-        });
-    }
-
     @FXML
     void initialize(){
         colProductCant.setCellValueFactory(new PropertyValueFactory<>("quantity"));
@@ -370,9 +337,9 @@ public class BillingController extends BaseController {
         colServiceDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         colServicePrice.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        setPriceProductCellFactory(colProductUnitPrice);
-        setPriceProductCellFactory(colProductTotalPrice);
-        setPriceServiceCellFactory(colServicePrice);
+        currencyFormaterCellFactory(colProductUnitPrice);
+        currencyFormaterCellFactory(colProductTotalPrice);
+        currencyFormaterCellFactory(colServicePrice);
 
         tblProductsBill.getItems().clear();
         tblProductsBill.getItems().addAll(this.productListToBill.getProducts());
