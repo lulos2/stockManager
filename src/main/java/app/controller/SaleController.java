@@ -10,7 +10,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -23,7 +25,7 @@ public class SaleController extends BaseController{
     private TableColumn<Bill, String> colSaleClient;
 
     @FXML
-    private TableColumn<Bill, LocalDateTime> colSaleDate;
+    private TableColumn<Bill, Timestamp> colSaleDate;
 
     @FXML
     private TableColumn<Bill, Void> colSaleDetail;
@@ -89,16 +91,33 @@ public class SaleController extends BaseController{
         StageManager.changeScene(Paths.SALES_DETAIL_FXML);
     }
 
+    private void formatDateCellFactory(TableColumn<Bill, Timestamp> column) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yy");
+        column.setCellFactory(col -> new TableCell<Bill, Timestamp>() {
+            @Override
+            protected void updateItem(Timestamp item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    LocalDateTime dateTime = item.toLocalDateTime();
+                    setText(dateTime.format(formatter));
+                }
+            }
+        });
+    }
+
     @FXML
     void initialize() {
+        formatDateCellFactory(colSaleDate);
         colSaleId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colSaleClient.setCellValueFactory(new PropertyValueFactory<>("client"));
         colSaleDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colSaleTotal.setCellValueFactory(new PropertyValueFactory<>("total"));
-        colSaleDetail.setCellFactory(param -> new TableCell<>() {
+        colSaleDetail.setCellFactory(_ -> new TableCell<>() {
             private final Button btn = new Button("Ver Detalle");
             {
-                btn.setOnAction(event -> {
+                btn.setOnAction(_ -> {
                     Bill bill = getTableView().getItems().get(getIndex());
                     openBillDetail(bill);
                 });
@@ -114,6 +133,7 @@ public class SaleController extends BaseController{
             }
         });
 
+        currencyFormaterCellFactory(colSaleTotal);
         loadProductData();
     }
 }

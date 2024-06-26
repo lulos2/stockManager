@@ -136,5 +136,9 @@ public class SaleViewController extends BaseController{
 
         billProductsTable.setItems(DataStorage.actualBill.getProducts().getProducts());
         billServicesTable.setItems(DataStorage.actualBill.getServices());
+
+        currencyFormaterCellFactory(colProductPrice);
+        currencyFormaterCellFactory(colProductTotal);
+        currencyFormaterCellFactory(colServiceTotal);
     }
 }
