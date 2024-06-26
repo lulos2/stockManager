@@ -8,7 +8,7 @@ import javafx.scene.control.TextArea;
 
 import java.util.List;
 
-public class ReportController {
+public class ReportController extends BaseController{
 
     @FXML
     private TextArea reportTextArea;

@@ -18,7 +18,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
-public class SaleViewController {
+public class SaleViewController extends BaseController{
 
     private BillingService billingService;
     private Bill bill;
@@ -83,11 +83,6 @@ public class SaleViewController {
 
     public SaleViewController() {
         this.bill = DataStorage.actualBill;
-    }
-
-    @FXML
-    void goToSales(ActionEvent event) {
-        StageManager.changeScene(Paths.SALES_FXML);
     }
 
     private Callback<TableColumn.CellDataFeatures<Product, Double>, ObservableValue<Double>> importCalculator() {

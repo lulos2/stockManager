@@ -23,7 +23,7 @@ import javafx.util.Callback;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 
-public class BillingController {
+public class BillingController extends BaseController {
 
     ProductService productService = new ProductService();
     BillingService billingService = new BillingService();
@@ -242,11 +242,6 @@ public class BillingController {
                 txtBillName.getText(),
                 Double.parseDouble(totalcount.getText().replace(Character.toString(','), "").replace('$','0'))
         );
-    }
-
-    @FXML
-    void goToMain(ActionEvent event) {
-        StageManager.changeScene(Paths.MAIN_FXML);
     }
 
     private Callback<TableColumn.CellDataFeatures<Product, Double>, ObservableValue<Double>> importCalculator() {

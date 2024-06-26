@@ -5,25 +5,7 @@ import app.util.StageManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
-public class MainController {
+public class MainController extends BaseController{
 
-    @FXML
-    void goToBilling(ActionEvent event) {
-        StageManager.changeScene(Paths.BILLING_FXML);
-    }
 
-    @FXML
-    void goToProduct(ActionEvent event) {
-        StageManager.changeScene(Paths.PRODUCT_FXML);
-    }
-
-    @FXML
-    void goToReports(ActionEvent event) {
-
-    }
-
-    @FXML
-    public void goToSales(ActionEvent actionEvent) {
-        StageManager.changeScene(Paths.SALES_FXML);
-    }
 }

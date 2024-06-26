@@ -17,7 +17,7 @@ import javafx.scene.input.MouseEvent;
 import java.text.NumberFormat;
 
 
-public class ProductController {
+public class ProductController extends BaseController{
 
     private final ProductService productService = new ProductService();
     private final ProductList productList;
@@ -218,12 +218,6 @@ public class ProductController {
                 chkLts.setSelected(false);
             }
         });
-    }
-
-    @FXML
-    void goToMain(ActionEvent event) {
-        System.out.println("Go to main");
-        StageManager.changeScene(Paths.MAIN_FXML);
     }
 
     void copiCode(){

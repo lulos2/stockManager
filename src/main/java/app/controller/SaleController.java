@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class SaleController {
+public class SaleController extends BaseController{
 
     private final ArrayList<Bill> billList = new ArrayList<>();
     private final BillingService billingService = new BillingService();
@@ -81,11 +81,6 @@ public class SaleController {
         salesTable.getItems().clear();
         salesTable.getItems().addAll(billFilteredList);
         salesTable.refresh();
-    }
-
-    @FXML
-    void goToMain(ActionEvent event) {
-        StageManager.changeScene(Paths.MAIN_FXML);
     }
 
     private void openBillDetail(Bill bill) {
