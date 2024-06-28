@@ -7,6 +7,7 @@ import app.service.BillingService;
 import app.service.ProductService;
 import app.util.DataStorage;
 import app.util.ShowAlert;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -324,13 +325,18 @@ public class BillingController extends BaseController {
         };
     }
 
+    private ObservableValue<String> concatProductTypeAndBrand(Product product) {
+        String productTypeAndBrand = STR."\{product.getType()} \{product.getBrand()}";
+        return new SimpleStringProperty(productTypeAndBrand);
+    }
+
     @FXML
     void initialize(){
-        colProductCant.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colProductCode.setCellValueFactory(new PropertyValueFactory<>("code"));
-        colProductTypeAndBrand.setCellValueFactory(new PropertyValueFactory<>("type"));
-        colProductUnitPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        colProductTypeAndBrand.setCellValueFactory(data -> concatProductTypeAndBrand(data.getValue()));
+        colProductCant.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         colProductUnitType.setCellValueFactory(new PropertyValueFactory<>("unitType"));
+        colProductUnitPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         colProductTotalPrice.setCellValueFactory(importCalculator());
 
         colService.setCellValueFactory(new PropertyValueFactory<>("name"));

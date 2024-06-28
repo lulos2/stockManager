@@ -101,7 +101,7 @@ public class ProductController extends BaseController{
             );
         }
         catch (NumberFormatException e){
-            System.out.println("Error: " + e.getMessage());
+            ShowAlert.invalidData(e);
             return null;
         }
     }

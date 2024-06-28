@@ -40,4 +40,12 @@ public class ShowAlert {
         alert.setContentText("Solo se permiten números en este campo.");
         alert.showAndWait();
     }
+
+    public static void invalidData(NumberFormatException e) {
+        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+        alert.setTitle("Datos inválidos");
+        alert.setHeaderText("Datos inválidos");
+        alert.setContentText("Los datos ingresados no son válidos.");
+        alert.showAndWait();
+    }
 }
