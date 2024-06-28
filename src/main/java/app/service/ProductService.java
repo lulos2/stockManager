@@ -34,4 +34,8 @@ public class ProductService {
     public List<Product> searchProduct(String text) {
         return productDAO.searchProduct(text);
     }
+
+    public List<Product> getProductsSold() {
+        return productDAO.getProductsSold();
+    }
 }

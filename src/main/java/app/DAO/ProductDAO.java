@@ -12,4 +12,5 @@ public interface ProductDAO {
     List<Product> getAllProducts();
     List<Product> searchProduct(String text);
     void discountStock(Connection connection, Long productCode, int quantityLess) throws SQLException;
+    List<Product> getProductsSold();
 }

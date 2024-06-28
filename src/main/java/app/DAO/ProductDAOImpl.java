@@ -137,4 +137,22 @@ public class ProductDAOImpl implements ProductDAO {
             pstmtUpdateStock.executeUpdate();
         }
     }
+
+    @Override
+    public List<Product> getProductsSold() {
+        List<Product> products = new ArrayList<>();
+        String sql = "SELECT product_code, SUM(quantity) FROM Bill_Product GROUP BY product_code ORDER BY SUM(quantity) DESC LIMIT 9";
+        try (Connection conn = DatabaseUtil.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                Product product = getProduct(rs.getLong("product_code"), conn);
+                product.setQuantity(rs.getInt(2));
+                products.add(product);
+            }
+        } catch (SQLException e) {
+            e.fillInStackTrace();
+        }
+        return products;
+    }
 }
