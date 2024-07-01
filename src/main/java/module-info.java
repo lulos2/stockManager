@@ -6,6 +6,7 @@ module app {
     requires org.xerial.sqlitejdbc;
     requires org.slf4j;
     requires org.slf4j.simple;
+    requires org.apache.commons.csv;
 
     exports app;
     exports app.model;

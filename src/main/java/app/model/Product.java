@@ -26,6 +26,16 @@ public class Product {
         this.unitType = unitType;
     }
 
+    public Product(String type, String brand, String description, Long code, Double price, Double quantity, String unitType) {
+        this.description = description;
+        this.type = type;
+        this.brand = brand;
+        this.code = code;
+        this.price = price;
+        this.quantity = quantity.intValue();
+        this.unitType = unitType;
+    }
+
     public int getId() {
         return id;
     }

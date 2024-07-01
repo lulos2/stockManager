@@ -48,4 +48,12 @@ public class ShowAlert {
         alert.setContentText("Los datos ingresados no son válidos.");
         alert.showAndWait();
     }
+
+    public static void showInformation(String title, String info) {
+        javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(info);
+        alert.showAndWait();
+    }
 }

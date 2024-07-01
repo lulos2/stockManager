@@ -23,6 +23,12 @@
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" onAction="#goToSales" text="Ventas" />
         </Menu>
+      <Menu mnemonicParsing="false" text="Cargar/Exportar">
+        <items>
+          <MenuItem mnemonicParsing="false" onAction="#loadProductCSV" text="Exportar Productos" />
+            <MenuItem mnemonicParsing="false" onAction="#exportProductCSV" text="Cargar Productos" />
+        </items>
+      </Menu>
     </MenuBar>
     <ScrollPane prefHeight="800.0" prefWidth="1280.0">
         <AnchorPane prefHeight="767.0" prefWidth="1270.0">
