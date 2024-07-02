@@ -43,7 +43,7 @@ public class MainController extends BaseController{
                 ShowAlert.showInformation("Archivo CSV cargado", "El archivo se cargo correctamente.");
 
             } catch (Exception e) {
-                e.fillInStackTrace();
+                e.printStackTrace();
             }
         }
     }
@@ -60,7 +60,7 @@ public class MainController extends BaseController{
                 csvLoader.exportToCSV(selectedFile.getAbsolutePath());
                 ShowAlert.showInformation("Datos CSV exportados", "Los productos de la base de datos se exporto correctamente.");
             } catch (Exception e) {
-                e.fillInStackTrace();
+                e.printStackTrace();
             }
         }
     }

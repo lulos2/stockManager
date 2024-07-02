@@ -25,8 +25,8 @@
         </Menu>
       <Menu mnemonicParsing="false" text="Cargar/Exportar">
         <items>
-          <MenuItem mnemonicParsing="false" onAction="#loadProductCSV" text="Exportar Productos" />
-            <MenuItem mnemonicParsing="false" onAction="#exportProductCSV" text="Cargar Productos" />
+          <MenuItem mnemonicParsing="false" onAction="#exportProductCSV" text="Exportar Productos" />
+            <MenuItem mnemonicParsing="false" onAction="#loadProductCSV" text="Cargar Productos" />
         </items>
       </Menu>
     </MenuBar>
