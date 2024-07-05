@@ -11,8 +11,8 @@ public class ProductService {
 
     ProductDAO productDAO = new ProductDAOImpl();
 
-    public Product getProductByCode(Long l) throws SQLException {
-        return this.productDAO.getProduct(l, null);
+    public Product getProductBy(Long id) throws SQLException {
+        return this.productDAO.getProductById(id, null);
     }
 
     public void addProduct(Product product) {
@@ -37,5 +37,13 @@ public class ProductService {
 
     public List<Product> getProductsSold() {
         return productDAO.getProductsSold();
+    }
+
+    public List<Product> getActiveProducts() {
+        return productDAO.getActiveProducts();
+    }
+
+    public Product getActiveProductByCode(Long code) {
+        return productDAO.getActiveProductByCode(code);
     }
 }

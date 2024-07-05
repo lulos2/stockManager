@@ -151,12 +151,12 @@ public class ProductController extends BaseController{
 
     public void updateTable() {
         tblProduct.getItems().clear();
-        tblProduct.getItems().addAll(productService.getAllProducts());
+        tblProduct.getItems().addAll(productService.getActiveProducts());
         tblProduct.refresh();
     }
 
     public void loadProductData() {
-        for (Product product : productService.getAllProducts()) {
+        for (Product product : productService.getActiveProducts()) {
             this.productList.addProduct(product);
         }
         updateTable();
@@ -241,6 +241,41 @@ public class ProductController extends BaseController{
         });
     }
 
+    void calculatePrice() {
+        if(txtCost.getText().isEmpty()){
+            txtPrice.clear();
+            txtCostPrice.clear();
+            return;
+        }
+        if(txtCostPrice.getText().isEmpty())return;
+        try {
+            isUpdating = true;
+            double cost = Double.parseDouble(txtCost.getText());
+            double costPrice = Double.parseDouble(txtCostPrice.getText());
+            Integer price = (int) (cost * ((costPrice/100)+1));
+            txtPrice.setText(String.valueOf(price));
+        } catch (NumberFormatException e) {
+            System.out.println("Error calculate price: " + e.getMessage());
+        } finally {
+            isUpdating = false;
+        }
+    }
+
+    void calculateCostPrice() {
+        if (txtPrice.getText().isEmpty() || txtCost.getText().isEmpty()) return;
+        try {
+            isUpdating = true;
+            double cost = Double.parseDouble(txtCost.getText());
+            double price = Double.parseDouble(txtPrice.getText());
+            Integer costPrice = (int) (((price - cost)/cost) * 100);
+            txtCostPrice.setText(String.valueOf(costPrice));
+        } catch (NumberFormatException e) {
+            System.out.println("Error calculate costPice: " + e.getMessage());
+        } finally {
+            isUpdating = false;
+        }
+    }
+
     @FXML
     void initialize() {
 
@@ -278,40 +313,5 @@ public class ProductController extends BaseController{
 
         loadProductData();
         copiCode();
-    }
-
-    void calculatePrice() {
-        if(txtCost.getText().isEmpty()){
-            txtPrice.clear();
-            txtCostPrice.clear();
-            return;
-        }
-        if(txtCostPrice.getText().isEmpty())return;
-        try {
-            isUpdating = true;
-            double cost = Double.parseDouble(txtCost.getText());
-            double costPrice = Double.parseDouble(txtCostPrice.getText());
-            Integer price = (int) (cost * ((costPrice/100)+1));
-            txtPrice.setText(String.valueOf(price));
-        } catch (NumberFormatException e) {
-            System.out.println("Error calculate price: " + e.getMessage());
-        } finally {
-            isUpdating = false;
-        }
-    }
-
-    void calculateCostPrice() {
-        if (txtPrice.getText().isEmpty() || txtCost.getText().isEmpty()) return;
-        try {
-            isUpdating = true;
-            double cost = Double.parseDouble(txtCost.getText());
-            double price = Double.parseDouble(txtPrice.getText());
-            Integer costPrice = (int) (((price - cost)/cost) * 100);
-            txtCostPrice.setText(String.valueOf(costPrice));
-        } catch (NumberFormatException e) {
-            System.out.println("Error calculate costPice: " + e.getMessage());
-        } finally {
-            isUpdating = false;
-        }
     }
 }

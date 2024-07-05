@@ -10,7 +10,10 @@ public class Product {
     private double price;
     private int quantity;
     private String unitType;
-
+    private int version;
+    private boolean active;
+    private String created_at;
+    private String updated_at;
 
     public Product() {
     }
@@ -26,14 +29,16 @@ public class Product {
         this.unitType = unitType;
     }
 
-    public Product(String type, String brand, String description, Long code, Double price, Double quantity, String unitType) {
-        this.description = description;
+    public Product(int id, long code, String type, String brand, double cost, double price, int quantity, String description, String unitType) {
+        this.id = id;
+        this.code = code;
         this.type = type;
         this.brand = brand;
-        this.code = code;
         this.price = price;
-        this.quantity = quantity.intValue();
+        this.quantity = quantity;
+        this.description = description;
         this.unitType = unitType;
+        this.cost = cost;
     }
 
     public int getId() {
@@ -96,12 +101,43 @@ public class Product {
         this.quantity = quantity;
     }
 
-
     public String getUnitType() {
         return unitType;
     }
 
     public void setUnitType(String unitType) {
         this.unitType = unitType;
+    }
+
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public String getCreated_at() {
+        return created_at;
+    }
+
+    public void setCreated_at(String created_at) {
+        this.created_at = created_at;
+    }
+
+    public String getUpdated_at() {
+        return updated_at;
+    }
+
+    public void setUpdated_at(String updated_at) {
+        this.updated_at = updated_at;
     }
 }

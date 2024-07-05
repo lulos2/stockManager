@@ -24,17 +24,25 @@ public class DatabaseUtil {
              Statement stmt = conn.createStatement()) {
 
             String sql = "CREATE TABLE IF NOT EXISTS Product (" +
-                    "id INTEGER," +
-                    "type TEXT NOT NULL," +
-                    "brand TEXT NOT NULL," +
-                    "code INTEGER PRIMARY KEY UNIQUE," +
-                    "cost REAL NOT NULL," +
-                    "price REAL NOT NULL," +
-                    "quantity INTEGER NOT NULL ," +
-                    "unitType TEXT NOT NULL," +
-                    "description TEXT" +
+                    "id INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                    "type TEXT NOT NULL,"+
+                    "brand TEXT NOT NULL,"+
+                    "code INTEGER,"+
+                    "cost REAL NOT NULL,"+
+                    "price REAL NOT NULL,"+
+                    "quantity INTEGER NOT NULL,"+
+                    "unitType TEXT NOT NULL,"+
+                    "description TEXT,"+
+                    "active BOOLEAN DEFAULT TRUE,"+
+                    "version INTEGER DEFAULT 1,"+
+                    "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"+
+                    "updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP "+
                     ");";
             stmt.executeUpdate(sql);
+            String createIndexSQL = "CREATE UNIQUE INDEX IF NOT EXISTS idx_product_code_version ON Product(code, version);";
+            stmt.executeUpdate(createIndexSQL);
+            String createUniqueIndexCodeActive = "CREATE UNIQUE INDEX IF NOT EXISTS idx_product_code_active ON Product(code) WHERE active = TRUE;";
+            stmt.executeUpdate(createUniqueIndexCodeActive);
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -65,9 +73,10 @@ public class DatabaseUtil {
             String sql = "CREATE TABLE IF NOT EXISTS Bill_Product (" +
                     "bill_id INTEGER," +
                     "product_code INTEGER," +
+                    "product_id INTEGER," +
                     "quantity INTEGER NOT NULL," +
                     "FOREIGN KEY(bill_id) REFERENCES Bills(id)," +
-                    "FOREIGN KEY(product_code) REFERENCES Product(code)" +
+                    "FOREIGN KEY(product_id) REFERENCES Product(id) ON DELETE RESTRICT" +
                     ");";
             stmt.executeUpdate(sql);
 

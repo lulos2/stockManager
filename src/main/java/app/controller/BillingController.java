@@ -119,7 +119,7 @@ public class BillingController extends BaseController {
     void addProductToBillList() throws SQLException {
         if(txtProductCode.getText().isEmpty() || txtQuantity.getText().isEmpty()) return;
         if(productListToBill.existCode(Long.parseLong(txtProductCode.getText()))) return;
-        Product product = this.productService.getProductByCode(Long.parseLong(txtProductCode.getText()));
+        Product product = this.productService.getActiveProductByCode(Long.parseLong(txtProductCode.getText()));
         if(product == null){
             ShowAlert.productNotFound();
             return;
@@ -188,8 +188,8 @@ public class BillingController extends BaseController {
     void increaseQuantity(ActionEvent event) throws SQLException {
         if(txtProductCode.getText().isEmpty()) return;
         if(!txtQuantity.getText().isEmpty()) {
-            if(productService.getProductByCode(Long.parseLong(txtProductCode.getText()))==null) return;
-            if(productService.getProductByCode(Long.parseLong(txtProductCode.getText())).getQuantity() <= Integer.parseInt(txtQuantity.getText())) return;
+            if(productService.getActiveProductByCode(Long.parseLong(txtProductCode.getText()))==null) return;
+            if(productService.getActiveProductByCode(Long.parseLong(txtProductCode.getText())).getQuantity() <= Integer.parseInt(txtQuantity.getText())) return;
             txtQuantity.setText(String.valueOf(Integer.parseInt(txtQuantity.getText()) + 1));
         }else {
             txtQuantity.setText("0");
@@ -221,7 +221,7 @@ public class BillingController extends BaseController {
             if(txtQuantity.getText().isEmpty()) {
                 txtQuantity.setText("1");
             }
-            int maxQuantity = productService.getProductByCode(Long.parseLong(txtProductCode.getText())).getQuantity();
+            int maxQuantity = productService.getActiveProductByCode(Long.parseLong(txtProductCode.getText())).getQuantity();
             if(Integer.parseInt(txtQuantity.getText()) > maxQuantity) {
                 txtQuantity.setText(String.valueOf(maxQuantity));
             }

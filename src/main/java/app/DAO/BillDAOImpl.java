@@ -6,7 +6,6 @@ import app.util.DatabaseUtil;
 import app.model.Product;
 import app.model.ProductList;
 import javafx.collections.FXCollections;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +17,7 @@ public class BillDAOImpl implements BillDAO {
 
     public void addBill(Bill bill) {
         String sqlBill = "INSERT INTO bill (client, date, total) VALUES (?, ?, ?)";
-        String sqlBillProduct = "INSERT INTO bill_product (bill_id, product_code, quantity) VALUES (?, ?, ?)";
+        String sqlBillProduct = "INSERT INTO bill_product (bill_id, product_id, product_code, quantity) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = DatabaseUtil.getConnection()) {
             conn.setAutoCommit(false);
@@ -41,11 +40,12 @@ public class BillDAOImpl implements BillDAO {
             try (PreparedStatement pstmtBillProduct = conn.prepareStatement(sqlBillProduct)) {
                 for (Product product : bill.getProducts().getProducts()) {
                     pstmtBillProduct.setLong(1, billId);
-                    pstmtBillProduct.setLong(2, product.getCode());
-                    pstmtBillProduct.setInt(3, product.getQuantity());
+                    pstmtBillProduct.setLong(2, product.getId());
+                    pstmtBillProduct.setLong(3, product.getCode());
+                    pstmtBillProduct.setInt(4, product.getQuantity());
                     pstmtBillProduct.addBatch();
 
-                    productDAO.discountStock(conn,product.getCode(), product.getQuantity());
+                    productDAO.discountStock(conn,product.getId(), product.getQuantity());
                 }
                 pstmtBillProduct.executeBatch();
             }
@@ -115,7 +115,7 @@ public class BillDAOImpl implements BillDAO {
                     pstmtBillProduct.setLong(1, id);
                     try (ResultSet rs = pstmtBillProduct.executeQuery()) {
                         while (rs.next()) {
-                            Product product = productDAO.getProduct(rs.getLong("product_code"), conn);
+                            Product product = productDAO.getProductById(rs.getLong("product_id"), conn);
                             product.setQuantity(rs.getInt("quantity"));
                             bill.getProducts().addProduct(product);
                         }
