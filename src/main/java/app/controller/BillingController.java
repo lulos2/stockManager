@@ -6,6 +6,7 @@ import app.model.Service;
 import app.service.BillingService;
 import app.service.ProductService;
 import app.util.DataStorage;
+import app.util.Enums;
 import app.util.ShowAlert;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -124,8 +125,10 @@ public class BillingController extends BaseController {
             ShowAlert.productNotFound();
             return;
         }
-        if(product.getQuantity() < Integer.parseInt(txtQuantity.getText()) || Integer.parseInt(txtQuantity.getText()) <= 0) return;
-        product.setQuantity(Integer.parseInt(txtQuantity.getText()));
+        if(product.getQuantity() < Double.parseDouble(txtQuantity.getText()) || Double.parseDouble(txtQuantity.getText()) <= 0) return;
+        double quantity = Double.parseDouble(txtQuantity.getText());
+        quantity = product.getUnitType().equals(Enums.UNITS) ? Math.round(quantity) : quantity;
+        product.setQuantity(quantity);
         productListToBill.addProduct(product);
         tblProductsBill.getItems().add(product);
         updateProductTable();
@@ -180,8 +183,8 @@ public class BillingController extends BaseController {
     @FXML
     void decreaseQuantity(ActionEvent event) {
         if(txtQuantity.getText().isEmpty()) return;
-        if(Integer.parseInt(txtQuantity.getText()) <= 1) return;
-        txtQuantity.setText(String.valueOf(Integer.parseInt(txtQuantity.getText()) - 1));
+        if(Double.parseDouble(txtQuantity.getText()) <= 1) return;
+        txtQuantity.setText(String.valueOf(Double.parseDouble(txtQuantity.getText()) - 1));
     }
 
     @FXML
@@ -189,8 +192,8 @@ public class BillingController extends BaseController {
         if(txtProductCode.getText().isEmpty()) return;
         if(!txtQuantity.getText().isEmpty()) {
             if(productService.getActiveProductByCode(Long.parseLong(txtProductCode.getText()))==null) return;
-            if(productService.getActiveProductByCode(Long.parseLong(txtProductCode.getText())).getQuantity() <= Integer.parseInt(txtQuantity.getText())) return;
-            txtQuantity.setText(String.valueOf(Integer.parseInt(txtQuantity.getText()) + 1));
+            if(productService.getActiveProductByCode(Long.parseLong(txtProductCode.getText())).getQuantity() <= Double.parseDouble(txtQuantity.getText())) return;
+            txtQuantity.setText(String.valueOf(Double.parseDouble(txtQuantity.getText()) + 1));
         }else {
             txtQuantity.setText("0");
         }
@@ -221,13 +224,12 @@ public class BillingController extends BaseController {
             if(txtQuantity.getText().isEmpty()) {
                 txtQuantity.setText("1");
             }
-            int maxQuantity = productService.getActiveProductByCode(Long.parseLong(txtProductCode.getText())).getQuantity();
-            if(Integer.parseInt(txtQuantity.getText()) > maxQuantity) {
+            double maxQuantity = productService.getActiveProductByCode(Long.parseLong(txtProductCode.getText())).getQuantity();
+            if(Double.parseDouble(txtQuantity.getText()) > maxQuantity) {
                 txtQuantity.setText(String.valueOf(maxQuantity));
             }
         }
         catch (Exception e){
-            ShowAlert.productNotFound();
             txtQuantity.setText("");
         }
     }
@@ -285,15 +287,6 @@ public class BillingController extends BaseController {
         subTotalCount.setText(currencyFormat.format(subTotal));
         desc.setText(currencyFormat.format(descent));
         totalcount.setText(currencyFormat.format(total));
-    }
-
-    private void setupNumericValidation(TextField textField) {
-        textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                textField.setText(newValue.replaceAll("[^\\d]", ""));
-                ShowAlert.onlyNumbers();
-            }
-        });
     }
 
     private <T> Callback<TableColumn<T, Void>, TableCell<T, Void>> createButtonCellFactory(ObservableList<T> list, TableView<?> tableView, Runnable updateMethod) {
@@ -361,9 +354,9 @@ public class BillingController extends BaseController {
         colProductActions.setCellFactory(createButtonCellFactory(productListToBill.getProducts(), tblProductsBill, this::updateProductTable));
         colServiceActions.setCellFactory(createButtonCellFactory(serviceListToBill, tblServiceList, this::updateServiceTable));
 
-        setupNumericValidation(txtServicePrice);
-        setupNumericValidation(txtQuantity);
-        setupNumericValidation(txtProductCode);
+        setupDoubleValidation(txtServicePrice);
+        setupDoubleValidation(txtQuantity);
+        setupIntegerValidation(txtProductCode);
 
         calculateTotal();
     }

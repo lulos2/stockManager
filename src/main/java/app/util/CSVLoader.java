@@ -49,7 +49,7 @@ public class CSVLoader {
             statement.setDouble(4, product.getPrice());
             statement.setDouble(5, product.getCost());
             statement.setString(6, product.getDescription());
-            statement.setInt(7, product.getQuantity());
+            statement.setDouble(7, product.getQuantity());
             statement.setString(8, product.getUnitType());
             statement.executeUpdate();
         }

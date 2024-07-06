@@ -34,7 +34,7 @@ public class ProductController extends BaseController{
     @FXML
     private TableColumn <Product, Double> colPrice;
     @FXML
-    private TableColumn <Product, Integer> colQuantity;
+    private TableColumn <Product, Double> colQuantity;
     @FXML
     private TableColumn<Product, String> colUnidad;
     @FXML
@@ -84,18 +84,20 @@ public class ProductController extends BaseController{
     Product createProduct(){
         if(txtType.getText().isEmpty() || txtBrand.getText().isEmpty() || txtCode.getText().isEmpty() || txtCost.getText().isEmpty() || txtPrice.getText().isEmpty() || txtQuantity.getText().isEmpty()) return null;
         try {
-            if (Integer.parseInt(txtQuantity.getText()) < 0) return null;
+            if (Double.parseDouble(txtQuantity.getText()) < 0) return null;
             if(productList.existCode(Long.parseLong(txtCode.getText()))) {
                 ShowAlert.productExists();
                 return null;
             }
+            double quantity = Double.parseDouble(txtQuantity.getText());
+            double finalQuantity = chkUnity.isSelected() ? Math.round(quantity) : quantity;
             return new Product(
                     txtType.getText(),
                     txtBrand.getText(),
                     Long.parseLong(txtCode.getText()),
                     Double.parseDouble(txtCost.getText()),
                     Double.parseDouble(txtPrice.getText()),
-                    Integer.parseInt(txtQuantity.getText()),
+                    finalQuantity,
                     txtDescription.getText(),
                     unitType()
             );
@@ -107,7 +109,6 @@ public class ProductController extends BaseController{
     }
 
     private String unitType() {
-        System.out.println(chkLts.isSelected());
         if(chkLts.isSelected()) return Enums.LTS;
         chkUnity.isSelected();
         return Enums.UNITS;
@@ -133,13 +134,15 @@ public class ProductController extends BaseController{
 
     void updateProduct(){
         if(tblProduct.getSelectionModel().getSelectedItem() == null) return;
+        double quantity = Double.parseDouble(txtQuantity.getText());
+        double finalQuantity = chkUnity.isSelected() ? Math.round(quantity) : quantity;
         Product product = new Product(
                 txtType.getText(),
                 txtBrand.getText(),
                 Long.parseLong(txtCode.getText()),
                 Double.parseDouble(txtCost.getText()),
                 Double.parseDouble(txtPrice.getText()),
-                Integer.parseInt(txtQuantity.getText()),
+                finalQuantity,
                 txtDescription.getText(),
                 unitType()
         );
@@ -278,7 +281,10 @@ public class ProductController extends BaseController{
 
     @FXML
     void initialize() {
-
+        setupIntegerValidation(txtCode);
+        setupDoubleValidation(txtCost);
+        setupDoubleValidation(txtPrice);
+        setupDoubleValidation(txtQuantity);
         currencyFormaterCellFactory(colPrice);
         currencyFormaterCellFactory(colCost);
 

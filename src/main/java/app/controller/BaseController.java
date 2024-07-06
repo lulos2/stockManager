@@ -1,10 +1,12 @@
 package app.controller;
 
 import app.util.Paths;
+import app.util.ShowAlert;
 import app.util.StageManager;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextField;
 
 import java.text.NumberFormat;
 
@@ -47,4 +49,21 @@ public abstract class BaseController {
         });
     }
 
+    protected void setupIntegerValidation(TextField textField) {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                textField.setText(newValue.replaceAll("[^\\d]", ""));
+                ShowAlert.onlyNumbers();
+            }
+        });
+    }
+
+    protected void setupDoubleValidation(TextField textField) {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                textField.setText(newValue.replaceAll("[^\\d.]", ""));
+                ShowAlert.showInformation("numeros y puntos", "Solo se permiten numeros y puntos en este campo.");
+            }
+        });
+    }
 }

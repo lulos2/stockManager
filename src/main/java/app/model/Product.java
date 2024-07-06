@@ -8,7 +8,7 @@ public class Product {
     private Long code;
     private double cost;
     private double price;
-    private int quantity;
+    private double quantity;
     private String unitType;
     private int version;
     private boolean active;
@@ -18,7 +18,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(String type, String brand, Long code, double cost, double price, int quantity, String description, String unitType) {
+    public Product(String type, String brand, Long code, double cost, double price, double quantity, String description, String unitType) {
         this.description = description;
         this.type = type;
         this.brand = brand;
@@ -29,7 +29,7 @@ public class Product {
         this.unitType = unitType;
     }
 
-    public Product(int id, long code, String type, String brand, double cost, double price, int quantity, String description, String unitType) {
+    public Product(int id, long code, String type, String brand, double cost, double price, double quantity, String description, String unitType) {
         this.id = id;
         this.code = code;
         this.type = type;
@@ -93,11 +93,11 @@ public class Product {
         this.price = price;
     }
 
-    public int getQuantity() {
+    public double getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
 

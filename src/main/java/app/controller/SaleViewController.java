@@ -5,12 +5,9 @@ import app.model.Product;
 import app.model.Service;
 import app.service.BillingService;
 import app.util.DataStorage;
-import app.util.Paths;
-import app.util.StageManager;
 import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -21,7 +18,6 @@ import javafx.util.Callback;
 public class SaleViewController extends BaseController{
 
     private BillingService billingService;
-    private Bill bill;
 
 
     @FXML
@@ -49,7 +45,7 @@ public class SaleViewController extends BaseController{
     private TableColumn<Product, Double> colProductPrice;
 
     @FXML
-    private TableColumn<Product, Integer> colProductQuantity;
+    private TableColumn<Product, Double> colProductQuantity;
 
     @FXML
     private TableColumn<Product, Double> colProductTotal;
@@ -82,7 +78,7 @@ public class SaleViewController extends BaseController{
     private Label labelBillTotal;
 
     public SaleViewController() {
-        this.bill = DataStorage.actualBill;
+        Bill bill = DataStorage.actualBill;
     }
 
     private Callback<TableColumn.CellDataFeatures<Product, Double>, ObservableValue<Double>> importCalculator() {

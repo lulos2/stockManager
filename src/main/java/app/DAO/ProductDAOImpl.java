@@ -190,11 +190,11 @@ public class ProductDAOImpl implements ProductDAO {
         return products;
     }
 
-    public void discountStock(Connection connection, int id, int quantityLess) throws SQLException {
+    public void discountStock(Connection connection, int id, double quantityLess) throws SQLException {
         String sqlUpdateStock = "UPDATE product SET quantity = quantity - ? WHERE id = ?";
 
         try (PreparedStatement pstmtUpdateStock = connection.prepareStatement(sqlUpdateStock)) {
-            pstmtUpdateStock.setInt(1, quantityLess);
+            pstmtUpdateStock.setDouble(1, quantityLess);
             pstmtUpdateStock.setLong(2, id);
             pstmtUpdateStock.executeUpdate();
         }
@@ -235,7 +235,7 @@ public class ProductDAOImpl implements ProductDAO {
                 rs.getString("brand"),
                 rs.getDouble("cost"),
                 rs.getDouble("price"),
-                rs.getInt("quantity"),
+                rs.getDouble("quantity"),
                 rs.getString("description"),
                 rs.getString("unitType")
         );
@@ -248,7 +248,7 @@ public class ProductDAOImpl implements ProductDAO {
         stmt.setLong(4, product.getCode());
         stmt.setDouble(5, product.getCost());
         stmt.setDouble(6, product.getPrice());
-        stmt.setInt(7, product.getQuantity());
+        stmt.setDouble(7, product.getQuantity());
         stmt.setString(8, product.getUnitType());
     }
 }

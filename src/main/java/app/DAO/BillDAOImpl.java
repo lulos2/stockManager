@@ -42,7 +42,7 @@ public class BillDAOImpl implements BillDAO {
                     pstmtBillProduct.setLong(1, billId);
                     pstmtBillProduct.setLong(2, product.getId());
                     pstmtBillProduct.setLong(3, product.getCode());
-                    pstmtBillProduct.setInt(4, product.getQuantity());
+                    pstmtBillProduct.setDouble(4, product.getQuantity());
                     pstmtBillProduct.addBatch();
 
                     productDAO.discountStock(conn,product.getId(), product.getQuantity());
@@ -81,7 +81,13 @@ public class BillDAOImpl implements BillDAO {
                     while (rs.next()) {
                         long timestamp = rs.getLong("date");
                         Timestamp date = new Timestamp(timestamp);
-                        Bill bill = new Bill(rs.getLong("id"), null, null, rs.getString("client"), date, rs.getDouble("total"));
+                        Bill bill = new Bill(
+                                rs.getLong("id"),
+                                null,
+                                null,
+                                rs.getString("client"),
+                                date,
+                                rs.getDouble("total"));
                         bills.add(bill);
                     }
                 }
@@ -105,7 +111,14 @@ public class BillDAOImpl implements BillDAO {
                     if (rs.next()) {
                         long timestamp = rs.getLong("date");
                         Timestamp date = new Timestamp(timestamp);
-                        bill = new Bill(rs.getLong("id"), new ProductList(), FXCollections.observableArrayList(), rs.getString("client"), date, rs.getDouble("total"));
+                        bill = new Bill(
+                                rs.getLong("id"),
+                                new ProductList(),
+                                FXCollections.observableArrayList(),
+                                rs.getString("client"),
+                                date,
+                                rs.getDouble("total")
+                        );
                     }
                 }
             }
@@ -116,7 +129,7 @@ public class BillDAOImpl implements BillDAO {
                     try (ResultSet rs = pstmtBillProduct.executeQuery()) {
                         while (rs.next()) {
                             Product product = productDAO.getProductById(rs.getLong("product_id"), conn);
-                            product.setQuantity(rs.getInt("quantity"));
+                            product.setQuantity(rs.getDouble("quantity"));
                             bill.getProducts().addProduct(product);
                         }
                     }
