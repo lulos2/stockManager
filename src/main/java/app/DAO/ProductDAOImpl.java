@@ -251,4 +251,57 @@ public class ProductDAOImpl implements ProductDAO {
         stmt.setDouble(7, product.getQuantity());
         stmt.setString(8, product.getUnitType());
     }
+
+    public static void purgeUnusedProducts() {
+        Connection conn = null;
+        try {
+            conn = DatabaseUtil.getConnection();
+            conn.setAutoCommit(false);
+
+            String selectSql = "SELECT p.id FROM product p " +
+                    "WHERE p.active = FALSE " +
+                    "AND NOT EXISTS (SELECT 1 FROM bill_product WHERE product_id = p.id) ";
+
+            List<Integer> productIdsToDelete = new ArrayList<>();
+            try (PreparedStatement pstmt = conn.prepareStatement(selectSql);
+                 ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    productIdsToDelete.add(rs.getInt("id"));
+                }
+            }
+            if (!productIdsToDelete.isEmpty()) {
+                String deleteSql = "DELETE FROM product WHERE id = ?";
+                try (PreparedStatement pstmt = conn.prepareStatement(deleteSql)) {
+                    for (Integer id : productIdsToDelete) {
+                        pstmt.setInt(1, id);
+                        pstmt.addBatch();
+                    }
+                    int[] deletedCounts = pstmt.executeBatch();
+                    System.out.println(STR."\{deletedCounts.length} productos basura eliminados.");
+                }
+            } else {
+                System.out.println("Tabla productos limpia.");
+            }
+
+            conn.commit();
+        } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }

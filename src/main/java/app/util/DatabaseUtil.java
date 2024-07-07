@@ -1,4 +1,5 @@
 package app.util;
+import app.DAO.ProductDAOImpl;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,6 +18,7 @@ public class DatabaseUtil {
        createServiceTable();
        createBillProductTable();
        createBillServiceTable();
+       ProductDAOImpl.purgeUnusedProducts();
     }
 
     private static void createProductTable() {
