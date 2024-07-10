@@ -18,6 +18,7 @@ public class DatabaseUtil {
        createServiceTable();
        createBillProductTable();
        createBillServiceTable();
+       createClientTable();
        ProductDAOImpl.purgeUnusedProducts();
     }
 
@@ -57,7 +58,7 @@ public class DatabaseUtil {
 
             String sql = "CREATE TABLE IF NOT EXISTS Bill (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "client TEXT NOT NULL," +
+                    "FOREIGN KEY(client_id) REFERENCES client(id) ON DELETE RESTRICT," +
                     "date TEXT NOT NULL," +
                     "total REAL NOT NULL" +
                     ");";
@@ -117,6 +118,32 @@ public class DatabaseUtil {
                     "FOREIGN KEY(service_id) REFERENCES Service(id)" +
                     ");";
             stmt.executeUpdate(sql);
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void createClientTable() {
+        try (Connection conn = getConnection();
+             Statement stmt = conn.createStatement()) {
+
+            String sql = "CREATE TABLE IF NOT EXISTS Client (" +
+                    "id INTEGER PRIMARY KEY  AUTOINCREMENT," +
+                    "document_number INTEGER," +
+                    "name TEXT NOT NULL," +
+                    "last_name TEXT NOT NULL," +
+                    "email TEXT NOT NULL," +
+                    "phone TEXT NOT NULL," +
+                    "address TEXT NOT NULL," +
+                    "document_type TEXT NOT NULL," +
+                    "balance REAL NOT NULL," +
+                    "description TEXT" +
+                    ");";
+            stmt.executeUpdate(sql);
+
+            String createIndexSQL = "CREATE UNIQUE INDEX IF NOT EXISTS idx_client_documet ON client(document_number, document_type);";
+            stmt.executeUpdate(createIndexSQL);
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());

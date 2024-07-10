@@ -9,4 +9,5 @@ public class Paths {
     public static final String STYLES_CSS = "/styles/styles.css";
     public static final String SALES_FXML = "/Fxml/Sales.fxml";
     public static final String SALES_DETAIL_FXML = "/Fxml/SaleDetail.fxml";
+    public static final String CLIENT_FXML = "/Fxml/Client.fxml";
 }

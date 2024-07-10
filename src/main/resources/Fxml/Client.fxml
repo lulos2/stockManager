@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.ClientController">
+    <MenuBar VBox.vgrow="NEVER">
+        <Menu mnemonicParsing="false" text="Ir a ...">
+            <MenuItem mnemonicParsing="false" onAction="#goToProduct" text="Productos" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" onAction="#goToBilling" text="Vender" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" onAction="#goToMain" text="Menu principal" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" onAction="#goToSales" text="Ventas" />
+        </Menu>
+    </MenuBar>
+    <ScrollPane prefHeight="800.0" prefWidth="1280.0">
+        <AnchorPane prefHeight="767.0" prefWidth="1270.0">
+
+        </AnchorPane>
+    </ScrollPane>
+</VBox>

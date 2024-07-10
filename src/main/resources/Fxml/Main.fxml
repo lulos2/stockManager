@@ -22,6 +22,8 @@
             <MenuItem mnemonicParsing="false" onAction="#goToMain" text="Menu principal" />
             <SeparatorMenuItem mnemonicParsing="false" />
             <MenuItem mnemonicParsing="false" onAction="#goToSales" text="Ventas" />
+            <SeparatorMenuItem mnemonicParsing="false" />
+            <MenuItem mnemonicParsing="false" onAction="#goToClient" text="Clientes" />
         </Menu>
       <Menu mnemonicParsing="false" text="Cargar/Exportar">
         <items>

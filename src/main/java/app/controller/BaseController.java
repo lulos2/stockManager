@@ -32,6 +32,10 @@ public abstract class BaseController {
     protected void goToSalesDetail() {
         StageManager.changeScene(Paths.SALES_DETAIL_FXML);
     }
+    @FXML
+    protected void goToClient() {
+        StageManager.changeScene(Paths.CLIENT_FXML);
+    }
 
     protected <T> void currencyFormaterCellFactory(TableColumn<T, Double> column) {
         column.setCellFactory(_ -> new TableCell<>() {
