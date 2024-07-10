@@ -9,10 +9,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -89,22 +86,6 @@ public class SaleController extends BaseController{
         bill = billingService.getBillById(bill.getId());
         DataStorage.setBill(bill);
         StageManager.changeScene(Paths.SALES_DETAIL_FXML);
-    }
-
-    private void formatDateCellFactory(TableColumn<Bill, Timestamp> column) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yy");
-        column.setCellFactory(col -> new TableCell<Bill, Timestamp>() {
-            @Override
-            protected void updateItem(Timestamp item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setText(null);
-                } else {
-                    LocalDateTime dateTime = item.toLocalDateTime();
-                    setText(dateTime.format(formatter));
-                }
-            }
-        });
     }
 
     @FXML

@@ -1,5 +1,6 @@
 package app.controller;
 
+import app.model.Bill;
 import app.util.Paths;
 import app.util.ShowAlert;
 import app.util.StageManager;
@@ -7,8 +8,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TextField;
-
+import java.sql.Timestamp;
 import java.text.NumberFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public abstract class BaseController {
 
@@ -67,6 +70,22 @@ public abstract class BaseController {
             if (!newValue.matches("\\d*(\\.\\d*)?")) {
                 textField.setText(newValue.replaceAll("[^\\d.]", ""));
                 ShowAlert.showInformation("numeros y puntos", "Solo se permiten numeros y puntos en este campo.");
+            }
+        });
+    }
+
+    protected void formatDateCellFactory(TableColumn<Bill, Timestamp> column) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yy");
+        column.setCellFactory(col -> new TableCell<Bill, Timestamp>() {
+            @Override
+            protected void updateItem(Timestamp item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setText(null);
+                } else {
+                    LocalDateTime dateTime = item.toLocalDateTime();
+                    setText(dateTime.format(formatter));
+                }
             }
         });
     }
