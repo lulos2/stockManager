@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+
+<MenuBar xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controller.MenuBarController">
+    <Menu mnemonicParsing="false" text="Ir a ...">
+        <MenuItem mnemonicParsing="false" onAction="#goToProduct" text="Productos" />
+        <SeparatorMenuItem mnemonicParsing="false" />
+        <MenuItem mnemonicParsing="false" onAction="#goToBilling" text="Vender" />
+        <SeparatorMenuItem mnemonicParsing="false" />
+        <MenuItem mnemonicParsing="false" onAction="#goToMain" text="Menu principal" />
+        <SeparatorMenuItem mnemonicParsing="false" />
+        <MenuItem mnemonicParsing="false" onAction="#goToSales" text="Ventas" />
+        <SeparatorMenuItem mnemonicParsing="false" />
+        <MenuItem mnemonicParsing="false" onAction="#goToClient" text="Clientes" />
+    </Menu>
+    <Menu mnemonicParsing="false" text="Cargar/Exportar">
+        <MenuItem mnemonicParsing="false" onAction="#exportProductCSV" text="Exportar Productos"/>
+        <MenuItem mnemonicParsing="false" onAction="#loadProductCSV" text="Cargar Productos"/>
+    </Menu>
+</MenuBar>
