@@ -3,10 +3,9 @@ package app.DAO;
 import app.model.Client;
 import app.util.DatabaseUtil;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClientDAOImpl implements ClientDAO{
     @Override
@@ -49,17 +48,29 @@ public class ClientDAOImpl implements ClientDAO{
     }
 
     @Override
+    public List<Client> getAllClients() {
+        List<Client> clients = new ArrayList<>();
+        String sql = "SELECT * FROM Client";
+        try (Connection conn = DatabaseUtil.getConnection();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
+             clientsFactory(clients, rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return clients;
+    }
+
+    @Override
     public Client getClientById(Long id) {
         String sql = "SELECT * FROM Client WHERE id = ?";
         try (Connection conn = DatabaseUtil.getConnection()){
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setLong(1, id);
-            Client rs = getClient(stmt);
-            if (rs != null) return rs;
+            return clientFactory(stmt.executeQuery());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     @Override
@@ -69,7 +80,7 @@ public class ClientDAOImpl implements ClientDAO{
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, type);
             stmt.setString(2, value);
-            Client rs = getClient(stmt);
+            Client rs = clientFactory(stmt.executeQuery());
             if (rs != null) return rs;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -77,22 +88,23 @@ public class ClientDAOImpl implements ClientDAO{
         return null;
     }
 
-    private Client getClient(PreparedStatement stmt) throws SQLException {
-        stmt.executeQuery();
-        ResultSet rs = stmt.getResultSet();
-        if (rs.next()){
-            return new Client(rs.getLong("id"),
-                    rs.getLong("document_number"),
-                    rs.getDouble("balance"),
-                    rs.getString("name"),
-                    rs.getString("last_name"),
-                    rs.getString("email"),
-                    rs.getString("phone"),
-                    rs.getString("address"),
-                    rs.getString("document_type"),
-                    rs.getString("description")
-            );
+    private void clientsFactory(List<Client> clients, ResultSet rs) throws SQLException {
+        while (rs.next()) {
+            clients.add(clientFactory(rs));
         }
-        return null;
+    }
+
+    private Client clientFactory(ResultSet rs) throws SQLException {
+        return new Client(rs.getLong("id"),
+                rs.getLong("document_number"),
+                rs.getDouble("balance"),
+                rs.getString("name"),
+                rs.getString("last_name"),
+                rs.getString("email"),
+                rs.getString("phone"),
+                rs.getString("address"),
+                rs.getString("document_type"),
+                rs.getString("description")
+        );
     }
 }

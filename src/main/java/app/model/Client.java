@@ -13,6 +13,9 @@ public class Client {
     String documentType;
     String description;
 
+    public Client() {
+    }
+
     public Client(long id, long documentNumber, double balance, String name, String lastName, String email, String phone, String address, String documentType, String description) {
         this.id = id;
         this.documentNumber = documentNumber;
