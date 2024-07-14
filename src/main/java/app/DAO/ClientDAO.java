@@ -11,4 +11,6 @@ public interface ClientDAO {
     List<Client> getAllClients();
     Client getClientById(Long id);
     Client getClientBy(String type, String value);
+
+    boolean existsClient(String documentType, long documentNumber);
 }

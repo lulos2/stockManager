@@ -80,12 +80,25 @@ public class ClientDAOImpl implements ClientDAO{
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, type);
             stmt.setString(2, value);
-            Client rs = clientFactory(stmt.executeQuery());
-            if (rs != null) return rs;
+            return clientFactory(stmt.executeQuery());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+    }
+
+    @Override
+    public boolean existsClient(String documentType, long documentNumber) {
+        String sql = "SELECT * FROM Client WHERE document_type = ? AND document_number = ?";
+        try (Connection conn = DatabaseUtil.getConnection()){
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, documentType);
+            stmt.setLong(2, documentNumber);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) return true;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
     }
 
     private void clientsFactory(List<Client> clients, ResultSet rs) throws SQLException {
